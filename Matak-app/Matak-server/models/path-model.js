@@ -6,6 +6,7 @@ const Schema = mongoose.Schema
 
 const Path = new Schema(
     {
+        // aviel tire
         // path_id: { type: Number, required: true },
         // path_from: { type: JSONGEO, required: true },
         // // path_to: { type: JSONGEO, required: true },
