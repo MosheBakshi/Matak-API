@@ -22,6 +22,7 @@ createPath = (req, res) => {
             return res.status(201).json({
                 success: true,
                 id: path._id,
+                terms_text: path.terms_text,
                 message: 'Path created!',
             })
         })
