@@ -2,8 +2,13 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 
+
+// requirements for DB - routers
 const db = require('./db')
 const pathRouter = require('./routes/path-router')
+const userRouter = require('./routes/user-router')
+//
+
 
 const app = express()
 const apiPort = 3000
@@ -18,6 +23,9 @@ app.get('/', (req, res) => {
     res.send('Hello World!')
 })
 
+// app use of routers
 app.use('/api', pathRouter)
+app.use('/api', userRouter)
+//
 
 app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`))
