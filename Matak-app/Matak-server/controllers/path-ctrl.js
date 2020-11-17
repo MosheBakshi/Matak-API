@@ -23,6 +23,7 @@ createPath = (req, res) => {
                 success: true,
                 id: path._id,
                 terms_text: path.terms_text,
+                approval_user_id: path.approval_user_id,
                 message: 'Path created!',
             })
         })
