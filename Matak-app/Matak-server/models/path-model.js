@@ -6,12 +6,10 @@ const Schema = mongoose.Schema
 
 const Path = new Schema(
     {
-        // aviel look
-        // path_id: { type: Number, required: true },
-        // path_from: { type: JSONGEO, required: true },
-        // path_to: { type: JSONGEO, required: true },
+        // path_from: { type: JSONGEO, required: true }, // to be continued
+        // path_to: { type: JSONGEO, required: true }, // to be continued
         terms_text: { type: String, required: true },
-        // approval_user_id: { type: Number, required: true },
+        approval_user_id: { type: Number, required: false },
     },
     { timestamps: true },
 )
