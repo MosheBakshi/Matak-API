@@ -7,6 +7,7 @@ const cors = require('cors')
 const db = require('./db')
 const pathRouter = require('./routes/path-router')
 const userRouter = require('./routes/user-router')
+const organizationRouter = require('./routes/organization-router')
 //
 
 
@@ -26,6 +27,7 @@ app.get('/', (req, res) => {
 // app use of routers
 app.use('/api', pathRouter)
 app.use('/api', userRouter)
+app.use('/api', organizationRouter)
 //
 
 app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`))
