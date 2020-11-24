@@ -8,6 +8,7 @@ const db = require('./db')
 const pathRouter = require('./routes/path-router')
 const userRouter = require('./routes/user-router')
 const organizationRouter = require('./routes/organization-router')
+const statusRouter = require('./routes/status-router')
 const carRouter = require('./routes/car-router')
 //
 
@@ -29,6 +30,7 @@ app.get('/', (req, res) => {
 app.use('/api', pathRouter)
 app.use('/api', userRouter)
 app.use('/api', organizationRouter)
+app.use('/api',statusRouter)
 app.use('/api', carRouter)
 //
 
