@@ -10,6 +10,7 @@ const userRouter = require('./routes/user-router')
 const organizationRouter = require('./routes/organization-router')
 const statusRouter = require('./routes/status-router')
 const carRouter = require('./routes/car-router')
+const pathInfoRouter = require('./routes/Path-Additional-Info-router')
 //
 
 
@@ -30,8 +31,9 @@ app.get('/', (req, res) => {
 app.use('/api', pathRouter)
 app.use('/api', userRouter)
 app.use('/api', organizationRouter)
-app.use('/api',statusRouter)
+app.use('/api', statusRouter)
 app.use('/api', carRouter)
+app.use('/api', pathInfoRouter)
 //
 
 app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`))
