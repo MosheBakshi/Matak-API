@@ -10,6 +10,7 @@ const userRouter = require('./routes/user-router')
 const organizationRouter = require('./routes/organization-router')
 const statusRouter = require('./routes/status-router')
 const carRouter = require('./routes/car-router')
+const notificationRouter = require('./routes/notification-router')
 //
 
 
@@ -32,6 +33,7 @@ app.use('/api', userRouter)
 app.use('/api', organizationRouter)
 app.use('/api',statusRouter)
 app.use('/api', carRouter)
+app.use('/api', notificationRouter)
 //
 
 app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`))
