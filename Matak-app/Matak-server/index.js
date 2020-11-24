@@ -24,13 +24,10 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 app.get('/', (req, res) => {
     res.send('Hello World!')
 })
-//hihihid
 // app use of routers
 app.use('/api', pathRouter)
 app.use('/api', userRouter)
 app.use('/api', organizationRouter)
 app.use('/api', carRouter)
 //
-// hi or
-// hi moshe
 app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`))
