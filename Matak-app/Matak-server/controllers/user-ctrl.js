@@ -1,4 +1,55 @@
 const User = require('../models/user-model')
+const jwt = require("jsonwebtoken")
+const bcrypt = require("bcrypt")
+
+
+
+async function getAllUsers(req, res) {
+    const user = await User.find({});
+    res.json({
+      user,
+      message: "Retrived successfully"
+    });
+  }
+  
+  async function getUser(req, res) {
+    const user = await User.findOne({
+      _id: req.params.id
+    });
+    res.json({
+      user,
+      message: "Found user successfully"
+    });
+  }
+
+
+
+async function loginUser(req, res) {
+    const { username, password } = req.body;
+    const user = await User.findOne({
+      username
+    });
+  
+    if (!user) {
+      throw Error("User not found");
+    }
+    if (bcrypt.compareSync(password, user.password)) {
+      const token = jwt.sign({ user }, "Cvbs!#56drsg575jrfsd@23456ewdg1", {
+        expiresIn: "24h"
+      });
+  
+      res.json({
+        user,
+        token,
+        message: "Logged in successfully"
+      });
+    } else {
+      res.status(401).json({
+        message: "Unauthenticated"
+      });
+    }
+  }
+
 
 createUser = (req, res) => {
     const body = req.body
@@ -43,4 +94,7 @@ createUser = (req, res) => {
 
 module.exports = {
     createUser,
+    loginUser,
+    getUser,
+    getAllUsers,
 }
