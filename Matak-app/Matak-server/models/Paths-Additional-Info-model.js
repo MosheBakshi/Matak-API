@@ -5,7 +5,8 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const PathInfo = new Schema(
-{
+{   
+    idDB: {type: String, required: false},
     Path_Name: { type: String, required: true },
     Applicant_user_id: { type: String, required: true , default: "None"},
     // Start_Date: { type: Date, required: true},
