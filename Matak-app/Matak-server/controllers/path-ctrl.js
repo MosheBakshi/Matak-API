@@ -15,8 +15,8 @@ createPath = (req, res) => {
     if (!path) {
         return res.status(400).json({ success: false, error: err })
     }
-    path.path_from = path.Array_of_Points[0]
-    path.path_to = path.Array_of_Points[path.Array_of_Points.length-1]
+    path.Path_From = path.Array_Of_Points[0]
+    path.Path_To = path.Array_Of_Points[path.Array_Of_Points.length-1]
     path
         .save()
         .then(() => {
@@ -25,11 +25,6 @@ createPath = (req, res) => {
                 success: true,
                 id: path._id,
                 path: path,
-                // Array_of_Points: path.Array_of_Points,
-                // terms_text: path.terms_text,
-                // approval_user_id: path.approval_user_id,
-                // path_from: path.path_from,
-                // path_to: path.path_to,
                 message: 'Path created!',
             })
         })
@@ -124,10 +119,34 @@ getPaths = async (req, res) => {
     }).catch(err => console.log(err))
 }
 
+getPathByStatus = async (req, res) => {
+    const query = { Status_Name: req.params.Status_Name }
+    const options = {
+        // sort matched documents in descending order by rating
+        // sort: { rating: -1 },
+        // Include only the `title` and `imdb` fields in the returned document
+        projection: { },
+      };
+    await Path.find(query, options, (err, paths) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+
+        if (!paths.length) {
+            return res
+                .status(404)
+                .json({ success: false, error: `Paths not found` })
+        }
+        return res.status(200).json({ success: true, data: paths })
+    }).catch(err => console.log(err))
+}
+
+
 module.exports = {
     createPath,
     updatePath,
     deletePath,
     getPaths,
     getPathById,
+    getPathByStatus,
 }
