@@ -1,4 +1,6 @@
 const Path = require('../models/path-model')
+const Status = require('../models/status-model')
+
 
 createPath = (req, res) => {
     const body = req.body
@@ -120,6 +122,17 @@ getPaths = async (req, res) => {
 }
 
 getPathByStatus = async (req, res) => {
+    await Status.findOne({ Status_Name: req.params.status }, (err, Status1) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+
+        if (!Status1) {
+            return res
+                .status(404)
+                .json({ success: false, error: `Status not valid` })
+        }
+    })
     await Path.find({ Status_Name: req.params.status }, (err, paths) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
@@ -131,7 +144,7 @@ getPathByStatus = async (req, res) => {
                 .json({ success: false, error: `Path not found` })
         }
         return res.status(200).json({ success: true, data: paths })
-    }).catch(err => console.log(err))
+    }).catch(err => console.log(err))  
 }
 
 
