@@ -120,14 +120,7 @@ getPaths = async (req, res) => {
 }
 
 getPathByStatus = async (req, res) => {
-    const query = { Status_Name: req.params.Status_Name }
-    const options = {
-        // sort matched documents in descending order by rating
-        // sort: { rating: -1 },
-        // Include only the `title` and `imdb` fields in the returned document
-        projection: { },
-      };
-    await Path.find(query, options, (err, paths) => {
+    await Path.find({ Status_Name: req.params.status }, (err, paths) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
@@ -135,7 +128,7 @@ getPathByStatus = async (req, res) => {
         if (!paths.length) {
             return res
                 .status(404)
-                .json({ success: false, error: `Paths not found` })
+                .json({ success: false, error: `Path not found` })
         }
         return res.status(200).json({ success: true, data: paths })
     }).catch(err => console.log(err))
