@@ -1,6 +1,5 @@
 const Path = require('../models/path-model')
-const Status = require('../models/status-model')
-
+const StatusCtrl = require('../controllers/status-ctrl')
 
 createPath = (req, res) => {
     const body = req.body
@@ -122,17 +121,10 @@ getPaths = async (req, res) => {
 }
 
 getPathByStatus = async (req, res) => {
-    await Status.findOne({ Status_Name: req.params.status }, (err, Status1) => {
-        if (err) {
-            return res.status(400).json({ success: false, error: err })
-        }
-
-        if (!Status1) {
-            return res
-                .status(404)
-                .json({ success: false, error: `Status not valid` })
-        }
-    })
+    result = StatusCtrl.getStatus(req,res)
+    if (result.status == 400 || result.status == 404)
+        return res.status(result.status).json({ success: false, error: err })
+        
     await Path.find({ Status_Name: req.params.status }, (err, paths) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })

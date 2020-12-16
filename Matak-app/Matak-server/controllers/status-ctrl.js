@@ -14,7 +14,20 @@ const Status = require('../models/status-model')
 //         return res.status(200).json({ success: true, data: path })
 //     }).catch(err => console.log(err))
 // }
-
+getStatus = async (req, res) => {
+    await Status.findOne({ Status_Name: req.params.status }, (err, status) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+        console.log(status)
+        if (!status) {
+            return res
+                .status(404)
+                .json({ success: false, error: `Status not valid` })
+        }
+        return res.status(200).json({ success: true, data: status })
+    }).catch(err => console.log(err))  
+}
 getStatuses = async (req, res) => {
     await Status.find({}, (err, status) => {
         if (err) {
@@ -67,5 +80,6 @@ postStatuses= (req, res) => {
 module.exports = {
     getStatuses,
     postStatuses,
+    getStatus,
     // getStatusByName,
 }

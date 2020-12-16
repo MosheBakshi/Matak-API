@@ -10,4 +10,4 @@ const Status = new Schema(
         Color: { type: String, required: true, default: 'check' },   
 },)
 
-module.exports = mongoose.model('Status', Status)
+module.exports = mongoose.model('status', Status)
