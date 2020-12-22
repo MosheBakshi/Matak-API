@@ -1,4 +1,3 @@
-const queries = require('../utils/queries');
 const errorHandler = require('../utils/errors');
 
 /**
