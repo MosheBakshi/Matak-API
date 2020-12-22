@@ -9,10 +9,14 @@ const protectedRouter = withJWTAuthMiddleware(router, "Cvbs!#56drsg575jrfsd@2345
 // POSTS
 router.post('/user', UserCtrl.createUser)
 router.post('/user/login',UserCtrl.loginUser)
+router.post('/user/mobile',UserCtrl.getUserByMobile)
+router.post('/user/email',UserCtrl.getUserByEmail)
+router.post('/user/first_name',UserCtrl.getUserByFirstName)
+router.post('/user/organ',UserCtrl.getAllUsersByOrganName)
 
 // GETS
 protectedRouter.get('/users', UserCtrl.getAllUsers)
-protectedRouter.get('/user/:id', UserCtrl.getUser)
+protectedRouter.get('/user/:id', UserCtrl.getUserById)
 
 
 module.exports = router

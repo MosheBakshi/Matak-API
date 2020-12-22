@@ -23,7 +23,7 @@ const User = new Schema(
           },
         mobile: { type: String, required: true },
         email: { type: String, required: true },
-        organ_id: { type: String, required: false , default: "None"},
+        organ_name: { type: String, required: false , default: "None"},
         username: { type: String, required: true },
         password: {
           type: String,

@@ -39,6 +39,15 @@ createOrganization = (req, res) => {
         })
 }
 
+checkOrganName = async(organ_name) =>{
+    const organization = await Organization.find({ name: organ_name })
+    if (!organization) {
+        return false
+    }
+    return true
+  }
+
 module.exports = {
     createOrganization,
+    checkOrganName
 }
