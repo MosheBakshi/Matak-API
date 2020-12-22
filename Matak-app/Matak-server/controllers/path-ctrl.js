@@ -121,14 +121,16 @@ getPaths = async (req, res) => {
     }).catch(err => console.log(err))
 }
 
-getPathByStatus = async (req, res) => { 
+getPathByStatus = async (req, res, next) => { 
     try
     {
+        // if (!next)
+        //     return res.status(404).json({ success: false, error: `Status not valid` })
         const body = req.body
-        const status = await Status.findOne({ Status_Name: body.Status_Name })
-        if (!status) {
-            return res.status(404).json({ success: false, error: `Status not valid` })
-        }
+        // const status = await Status.findOne({ Status_Name: body.Status_Name })
+        // if (!status) {
+        //     return res.status(404).json({ success: false, error: `Status not valid` })
+        // }
         const paths = await Path.find({ Status_Name: body.Status_Name })
         if (!paths.length) {
             return res
@@ -139,6 +141,7 @@ getPathByStatus = async (req, res) => {
     }
     catch(error){
         console.log(error)
+        next(error)
     }
 }
 

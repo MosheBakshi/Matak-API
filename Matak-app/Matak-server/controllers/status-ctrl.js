@@ -1,6 +1,24 @@
 const Status = require('../models/status-model')
 
-getStatusByName = async (req, res) => {
+
+checkStatusByName = async (req, res, next) => {
+    try
+    {
+        const body = req.body
+        const status = await Status.findOne({ Status_Name: body.Status_Name })
+        if (!status) {
+            const error = new Error('status Not FOUND')
+            error.status = 404
+            throw error 
+        }
+        next()
+    }
+    catch (e){
+        return res.status(e.status).json({ success: false, error: e.message })
+    }
+}
+
+getStatusByName = async (req, res, next) => {
     try
     {
         const body = req.body
@@ -8,7 +26,7 @@ getStatusByName = async (req, res) => {
         if (!status) {
             return res.status(404).json({ success: false, error: `Status not valid` })
         }
-        return res.status(200).json({ success: true, data: status })
+        next(res.status(200).json({ success: true, data: status }))
     }
     catch (error){
         console.log(error)
@@ -68,4 +86,5 @@ module.exports = {
     getStatuses,
     postStatuses,
     getStatusByName,
+    checkStatusByName,
 }
