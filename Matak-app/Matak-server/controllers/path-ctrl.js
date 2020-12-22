@@ -1,5 +1,6 @@
 const Path = require('../models/path-model')
 const StatusCtrl = require('../controllers/status-ctrl')
+const bcrypt = require("bcrypt")
 
 createPath = (req, res) => {
     const body = req.body
