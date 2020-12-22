@@ -9,6 +9,6 @@ router.put('/path/:id', PathCtrl.updatePath)
 router.delete('/path/:id', PathCtrl.deletePath)
 router.get('/path/:id', PathCtrl.getPathById)
 router.get('/paths', PathCtrl.getPaths)
-router.get('/pathsbystatus/:status', PathCtrl.getPathByStatus)
+router.post('/PathsByStatus', PathCtrl.getPathByStatus)
 
 module.exports = router
