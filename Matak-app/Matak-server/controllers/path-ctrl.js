@@ -1,4 +1,5 @@
 const Path = require('../models/path-model')
+const StatusCtrl = require('../controllers/status-ctrl')
 
 createPath = (req, res) => {
     const body = req.body
@@ -15,17 +16,16 @@ createPath = (req, res) => {
     if (!path) {
         return res.status(400).json({ success: false, error: err })
     }
-
+    path.Path_From = path.Array_Of_Points[0]
+    path.Path_To = path.Array_Of_Points[path.Array_Of_Points.length-1]
     path
         .save()
         .then(() => {
+
             return res.status(201).json({
                 success: true,
                 id: path._id,
-                terms_text: path.terms_text,
-                approval_user_id: path.approval_user_id,
-                path_from: path.path_from,
-                path_to: path.path_to,
+                path: path,
                 message: 'Path created!',
             })
         })
@@ -120,10 +120,31 @@ getPaths = async (req, res) => {
     }).catch(err => console.log(err))
 }
 
+getPathByStatus = async (req, res) => {
+    result = StatusCtrl.getStatus(req,res)
+    if (result.status == 400 || result.status == 404)
+        return res.status(result.status).json({ success: false, error: err })
+        
+    await Path.find({ Status_Name: req.params.status }, (err, paths) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+
+        if (!paths.length) {
+            return res
+                .status(404)
+                .json({ success: false, error: `Path not found` })
+        }
+        return res.status(200).json({ success: true, data: paths })
+    }).catch(err => console.log(err))  
+}
+
+
 module.exports = {
     createPath,
     updatePath,
     deletePath,
     getPaths,
     getPathById,
+    getPathByStatus,
 }
