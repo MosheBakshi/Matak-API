@@ -7,13 +7,14 @@ checkStatusByName = async (req, res, next) => {
         const body = req.body
         const status = await Status.findOne({ Status_Name: body.Status_Name })
         if (!status) {
-            const error = new Error('status Not FOUND')
+            const error = new Error('status not valid')
             error.status = 404
-            throw error 
+            throw error
         }
         next()
     }
     catch (e){
+        console.log(e)
         return res.status(e.status).json({ success: false, error: e.message })
     }
 }

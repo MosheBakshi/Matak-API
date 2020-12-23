@@ -7,8 +7,8 @@ const router = express.Router()
 const protectedRouter = withJWTAuthMiddleware(router, "Cvbs!#56drsg575jrfsd@23456ewdg1");
 
 // POSTS
-protectedRouter.post('/user', UserCtrl.createUser)
-protectedRouter.post('/user/login',UserCtrl.loginUser)
+router.post('/user', UserCtrl.createUser)
+router.post('/user/login',UserCtrl.loginUser)
 protectedRouter.post('/user/mobile',UserCtrl.getUserByMobile)
 protectedRouter.post('/user/email',UserCtrl.getUserByEmail)
 protectedRouter.post('/user/first_name',UserCtrl.getUserByFirstName)
