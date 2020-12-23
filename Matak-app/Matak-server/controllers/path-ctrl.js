@@ -1,4 +1,5 @@
 const Path = require('../models/path-model')
+const Status = require('../models/status-model')
 const StatusCtrl = require('../controllers/status-ctrl')
 const bcrypt = require("bcrypt")
 
@@ -121,23 +122,28 @@ getPaths = async (req, res) => {
     }).catch(err => console.log(err))
 }
 
-getPathByStatus = async (req, res) => {
-    result = StatusCtrl.getStatus(req,res)
-    if (result.status == 400 || result.status == 404)
-        return res.status(result.status).json({ success: false, error: err })
-        
-    await Path.find({ Status_Name: req.params.status }, (err, paths) => {
-        if (err) {
-            return res.status(400).json({ success: false, error: err })
-        }
-
+getPathByStatus = async (req, res, next) => { 
+    try
+    {
+        // if (!next)
+        //     return res.status(404).json({ success: false, error: `Status not valid` })
+        const body = req.body
+        // const status = await Status.findOne({ Status_Name: body.Status_Name })
+        // if (!status) {
+        //     return res.status(404).json({ success: false, error: `Status not valid` })
+        // }
+        const paths = await Path.find({ Status_Name: body.Status_Name })
         if (!paths.length) {
             return res
                 .status(404)
                 .json({ success: false, error: `Path not found` })
         }
         return res.status(200).json({ success: true, data: paths })
-    }).catch(err => console.log(err))  
+    }
+    catch(error){
+        console.log(error)
+        next(error)
+    }
 }
 
 

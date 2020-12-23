@@ -37,3 +37,7 @@ app.use('/api', notificationRouter)
 //
 // Updated from workflow to moshe
 app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`))
+
+app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`))
+
+// updated for aviel's
