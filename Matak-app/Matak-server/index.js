@@ -37,3 +37,4 @@ app.use('/api', notificationRouter)
 app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`))
 
 //latest update from ctrls async funcs and try catch blocks, models parameters fixed name
+// comments added where needed
