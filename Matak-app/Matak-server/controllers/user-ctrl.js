@@ -1,6 +1,10 @@
 const User = require('../models/user-model')
 const jwt = require("jsonwebtoken")
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt");
+const organizationCtrl = require('./organization-ctrl');
+const Organization = require('../models/organization-model');
+const organizationModel = require('../models/organization-model');
+
 
 
 
@@ -12,7 +16,7 @@ async function getAllUsers(req, res) {
     });
   }
   
-  async function getUser(req, res) {
+  async function getUserById(req, res) {
     const user = await User.findOne({
       _id: req.params.id
     });
@@ -21,6 +25,65 @@ async function getAllUsers(req, res) {
       message: "Found user successfully"
     });
   }
+
+  async function getUserByFirstName(req, res) {
+    const body = req.body
+    const user = await User.find({
+      name: body.name
+    });
+    res.json({
+      user,
+      message: "Found user successfully"
+    });
+  }
+
+  async function getUserByMobile(req, res) {
+    const body = req.body
+    const user = await User.findOne({
+      mobile: body.mobile
+    });
+    res.json({
+      user,
+      message: "Found user successfully"
+    });
+  }
+
+  async function getUserByEmail(req, res) {
+    const body = req.body
+    const user = await User.findOne({
+      email: body.email
+    });
+    res.json({
+      user,
+      message: "Found user successfully"
+    });
+  }
+
+  getAllUsersByOrganName = async (req, res) => { 
+    try
+    {
+      const body = req.body
+      
+      console.log(organizationCtrl.checkOrganName(body.name))
+      if(organizationCtrl.checkOrganName(body.name)==false){
+        return res.status(404).json({ success: false, error: `organization not valid` })
+      }
+     // const organization = await Organization.findOne({ name: body.name })
+     // if (!organization) {
+      //    return res.status(404).json({ success: false, error: `organization not valid` })
+      //}
+      const users = await User.find({ organ_name: body.name })
+      if (!users.length) {
+          return res
+            .status(404)
+            .json({ success: false, error: `Users not found` })
+      }
+      return res.status(200).json({ success: true, data: users })
+    }
+    catch(error){
+        console.log(error)
+    }
+}
 
 
 
@@ -95,6 +158,10 @@ createUser = (req, res) => {
 module.exports = {
     createUser,
     loginUser,
-    getUser,
+    getUserById,
     getAllUsers,
+    getUserByMobile,
+    getUserByEmail,
+    getUserByFirstName,
+    getAllUsersByOrganName
 }

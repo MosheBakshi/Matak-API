@@ -16,4 +16,6 @@ const Organization = new Schema(
   { timestamps: true },
 )
 
+
+
 module.exports = mongoose.model('Organizations', Organization)
