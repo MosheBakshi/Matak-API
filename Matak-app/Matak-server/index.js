@@ -33,10 +33,7 @@ app.use('/api', organizationRouter)
 app.use('/api', statusRouter)
 app.use('/api', carRouter)
 app.use('/api', notificationRouter)
-//
-// Updated from workflow to moshe
+
 app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`))
 
-// updated for aviel's
-
-// updated for or's
+//update of workflow to share every one with oldest version
