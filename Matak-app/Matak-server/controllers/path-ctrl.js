@@ -125,8 +125,6 @@ getPaths = async (req, res) => {
 getPathByStatus = async (req, res, next) => { 
     try
     {
-        // if (!next)
-        //     return res.status(404).json({ success: false, error: `Status not valid` })
         const body = req.body
         // const status = await Status.findOne({ Status_Name: body.Status_Name })
         // if (!status) {
