@@ -93,6 +93,8 @@ deletePath = async (req, res, next) => {
     }).catch(err => console.log(err))
 }
 
+//check path by id
+
 getPathById = async (req, res, next) => {
     try
     {

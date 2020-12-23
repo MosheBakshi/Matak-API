@@ -37,6 +37,7 @@ createNotification = (req, res, next) => {
         })
 }
 
+// fix to post
 getNotificationById = async (req, res, next) => {
     await Notification.findOne({ _id: req.params.id }, (err, notification) => {
         if (err) {
@@ -52,6 +53,7 @@ getNotificationById = async (req, res, next) => {
     }).catch(err => console.log(err))
 }
 
+// body to fix
 getNotification = async (req, res, next) => {
     await Notification.find({}, (err, notification) => {
         if (err) {

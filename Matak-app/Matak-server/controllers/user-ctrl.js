@@ -1,11 +1,6 @@
 const User = require('../models/user-model')
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt");
-const organizationCtrl = require('./organization-ctrl');
-const Organization = require('../models/organization-model');
-const organizationModel = require('../models/organization-model');
-
-
 
 
 getAllUsers = async (req, res, next) => {
@@ -120,7 +115,7 @@ getAllUsersByOrganName = async (req, res, next) => {
 }
 
 
-
+//Tabs
 loginUser = async (req, res, next) => {
   const { username, password } = req.body;
   const user = await User.findOne({

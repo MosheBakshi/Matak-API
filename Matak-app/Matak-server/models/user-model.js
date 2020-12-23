@@ -9,6 +9,7 @@ function setPassword(value) {
   return bcrypt.hashSync(value, 10);
 }
 
+//names
 
 const User = new Schema(
     {

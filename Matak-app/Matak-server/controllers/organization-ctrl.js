@@ -39,6 +39,7 @@ createOrganization = (req, res, next) => {
         })
 }
 
+// title need to be fixed
 checkOrganName = async(req, res, next) =>{
     try
     {

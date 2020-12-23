@@ -17,7 +17,7 @@ router.post('/user/organ', OrganCtrl.checkOrganName, UserCtrl.getAllUsersByOrgan
 
 // GETS
 protectedRouter.get('/users', UserCtrl.getAllUsers)
-protectedRouter.get('/user/:id', UserCtrl.getUserById)
+protectedRouter.get('/user/:id', UserCtrl.getUserById)//need to be fixed
 
 
 module.exports = router

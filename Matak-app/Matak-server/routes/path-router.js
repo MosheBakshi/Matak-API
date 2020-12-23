@@ -14,9 +14,9 @@ const StatusCtrl = require('../controllers/status-ctrl')
 const protectedRouter = withJWTAuthMiddleware(router, "Cvbs!#56drsg575jrfsd@23456ewdg1")
 
 protectedRouter.post('/path', PathCtrl.createPath)
-protectedRouter.put('/path/:id', PathCtrl.updatePath)
-protectedRouter.delete('/path/:id', PathCtrl.deletePath)
-protectedRouter.get('/path/:id', PathCtrl.getPathById)
+protectedRouter.put('/path/:id', PathCtrl.updatePath)//need to be fixed
+protectedRouter.delete('/path/:id', PathCtrl.deletePath)//need to be fixed
+protectedRouter.get('/path/:id', PathCtrl.getPathById)//post
 protectedRouter.post('/paths', PathCtrl.getPaths)
 router.post('/PathsByStatus',StatusCtrl.checkStatusByName, PathCtrl.getPathByStatus)
 

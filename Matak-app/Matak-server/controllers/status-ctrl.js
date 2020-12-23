@@ -19,6 +19,7 @@ checkStatusByName = async (req, res, next) => {
     }
 }
 
+// need to fix
 getStatusByName = async (req, res, next) => {
     try
     {
@@ -53,7 +54,7 @@ getStatuses = async (req, res, next) => {
 }
 
 
-
+//no needed
 postStatuses= (req, res) => {
     const body = req.body
 
