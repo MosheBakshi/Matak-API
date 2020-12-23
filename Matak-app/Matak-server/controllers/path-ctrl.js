@@ -39,7 +39,7 @@ createPath = (req, res) => {
         })
 }
 
-updatePath = async (req, res) => {
+updatePath = async (req, res, next) => {
     const body = req.body
 
     if (!body) {
@@ -77,7 +77,7 @@ updatePath = async (req, res) => {
     })
 }
 
-deletePath = async (req, res) => {
+deletePath = async (req, res, next) => {
     await Path.findOneAndDelete({ _id: req.params.id }, (err, path) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
@@ -93,33 +93,41 @@ deletePath = async (req, res) => {
     }).catch(err => console.log(err))
 }
 
-getPathById = async (req, res) => {
-    await Path.findOne({ _id: req.params.id }, (err, path) => {
-        if (err) {
-            return res.status(400).json({ success: false, error: err })
-        }
-
-        if (!path) {
-            return res
-                .status(404)
-                .json({ success: false, error: `Path not found` })
-        }
-        return res.status(200).json({ success: true, data: path })
-    }).catch(err => console.log(err))
-}
-
-getPaths = async (req, res) => {
-    await Path.find({}, (err, paths) => {
-        if (err) {
-            return res.status(400).json({ success: false, error: err })
-        }
+getPathById = async (req, res, next) => {
+    try
+    {
+        const body = req.body
+        const paths = await Path.find({ _id: body._id })
         if (!paths.length) {
-            return res
-                .status(404)
-                .json({ success: false, error: `Path not found` })
+            const error = new Error('Path not found')
+            error.status = 404
+            throw error
         }
         return res.status(200).json({ success: true, data: paths })
-    }).catch(err => console.log(err))
+    }
+    catch(e){
+        console.log(e)
+        return res.status(e.status).json({ success: false, error: e.message })
+    }
+}
+
+
+getPaths = async (req, res, next) => {
+    try
+    {
+        const body = req.body
+        const paths = await Path.find({})
+        if (!paths.length) {
+            const error = new Error('Paths not found')
+            error.status = 404
+            throw error
+        }
+        return res.status(200).json({ success: true, data: paths })
+    }
+    catch(e){
+        console.log(e)
+        return res.status(e.status).json({ success: false, error: e.message })
+    }
 }
 
 getPathByStatus = async (req, res, next) => { 
@@ -128,7 +136,7 @@ getPathByStatus = async (req, res, next) => {
         const body = req.body
         const paths = await Path.find({ Status_Name: body.Status_Name })
         if (!paths.length) {
-            const error = new Error('path not found')
+            const error = new Error('Path not found')
             error.status = 404
             throw error
         }

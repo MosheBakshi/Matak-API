@@ -8,4 +8,5 @@ const protectedRouter = withJWTAuthMiddleware(router, "Cvbs!#56drsg575jrfsd@2345
 
 protectedRouter.post('/organization', OrganizationCtrl.createOrganization)
 
+
 module.exports = router

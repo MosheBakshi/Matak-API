@@ -6,12 +6,12 @@ const Schema = mongoose.Schema
 
 const Organization = new Schema(
 {
-        name: { type: String, required: true },
-        contact: { type: String, required: true },
-        mobile: { type: String, required: true },
-        email: { type: String, required: true },
-        fax: { type: String, required: false, default: "None"},
-        country: { type: String, required: true },
+        Name: { type: String, required: true },
+        Contact: { type: String, required: true },
+        Mobile: { type: String, required: true },
+        Email: { type: String, required: true },
+        Fax: { type: String, required: false, default: "None"},
+        Country: { type: String, required: true },
   },
   { timestamps: true },
 )

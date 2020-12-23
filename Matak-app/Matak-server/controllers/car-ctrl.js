@@ -1,6 +1,6 @@
 const Car = require('../models/car-model')
 
-createCar = (req, res) => {
+createCar = (req, res, next) => {
     const body = req.body
 
     if (!body) {

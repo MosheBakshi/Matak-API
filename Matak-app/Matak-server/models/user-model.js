@@ -12,7 +12,7 @@ function setPassword(value) {
 
 const User = new Schema(
     {
-        name: {
+        Name: {
             type: {
               type: String, // Don't do `{ name: { type: String } }`
               enum: ['Name'], // 'name.type' must be 'Name'
@@ -21,16 +21,16 @@ const User = new Schema(
             first_name: { type: String, required: true },
             last_name: { type: String, required: true },            
           },
-        mobile: { type: String, required: true },
-        email: { type: String, required: true },
-        organ_name: { type: String, required: false , default: "None"},
-        username: { type: String, required: true },
-        password: {
+        Mobile: { type: String, required: true },
+        Email: { type: String, required: true },
+        Organ_name: { type: String, required: false , default: "None"},
+        Username: { type: String, required: true },
+        Password: {
           type: String,
           required: true,
           set: setPassword
         },
-        usertype: { type: String, enum: ['Arbel','Matak'], required: false } // 'usertype.type' must be 'Arbel'/'Matak'
+        User_type: { type: String, enum: ['Arbel','Matak'], required: false } // 'usertype.type' must be 'Arbel'/'Matak'
     },
     { timestamps: true },
 )

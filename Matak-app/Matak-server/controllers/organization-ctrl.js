@@ -1,6 +1,6 @@
 const Organization = require('../models/organization-model')
 
-createOrganization = (req, res) => {
+createOrganization = (req, res, next) => {
     const body = req.body
 
     if (!body) {
@@ -39,12 +39,22 @@ createOrganization = (req, res) => {
         })
 }
 
-checkOrganName = async(organ_name) =>{
-    const organization = await Organization.find({ name: organ_name })
-    if (!organization) {
-        return false
+checkOrganName = async(req, res, next) =>{
+    try
+    {
+        const body = req.body
+        const organ = await Organization.findOne({ Name: body.Name })
+        if (!organ) {
+            const error = new Error('Organization name not valid')
+            error.status = 404
+            throw error
+        }
+        next()
     }
-    return true
+    catch (e){
+        console.log(e)
+        return res.status(e.status).json({ success: false, error: e.message })
+    }
   }
 
 module.exports = {

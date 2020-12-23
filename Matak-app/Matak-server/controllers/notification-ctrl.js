@@ -1,6 +1,6 @@
 const Notification = require('../models/notification-model')
 
-createNotification = (req, res) => {
+createNotification = (req, res, next) => {
     const body = req.body
 
     if (!body) {
@@ -37,7 +37,7 @@ createNotification = (req, res) => {
         })
 }
 
-getNotificationById = async (req, res) => {
+getNotificationById = async (req, res, next) => {
     await Notification.findOne({ _id: req.params.id }, (err, notification) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
@@ -52,7 +52,7 @@ getNotificationById = async (req, res) => {
     }).catch(err => console.log(err))
 }
 
-getNotification = async (req, res) => {
+getNotification = async (req, res, next) => {
     await Notification.find({}, (err, notification) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })

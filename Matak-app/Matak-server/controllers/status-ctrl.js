@@ -34,18 +34,22 @@ getStatusByName = async (req, res, next) => {
     }
 }
 
-getStatuses = async (req, res) => {
-    await Status.find({}, (err, status) => {
-        if (err) {
-            return res.status(400).json({ success: false, error: err })
-        }
-        if (!status.length) {
-            return res
-                .status(404)
-                .json({ success: false, error: `Status not found` })
+getStatuses = async (req, res, next) => {
+    try
+    {
+        const body = req.body
+        const status = await Status.find({})
+        if (!paths.length) {
+            const error = new Error('Statuses not found')
+            error.status = 404
+            throw error
         }
         return res.status(200).json({ success: true, data: status })
-    }).catch(err => console.log(err))
+    }
+    catch(e){
+        console.log(e)
+        return res.status(e.status).json({ success: false, error: e.message })
+    }
 }
 
 
