@@ -2,6 +2,7 @@ const Path = require('../models/path-model')
 const Status = require('../models/status-model')
 const StatusCtrl = require('../controllers/status-ctrl')
 const bcrypt = require("bcrypt")
+const db = require('../db')
 
 createPath = (req, res) => {
     const body = req.body
@@ -95,24 +96,40 @@ deletePath = async (req, res, next) => {
 
 //check path by id
 
+// getPathById = async (req, res, next) => {
+//     try
+//     {
+//         const body = req.body
+//         const paths = await Path.find({ _id: body._id })
+//         if (!paths.length) {
+//             const error = new Error('Path not found')
+//             error.status = 404
+//             throw error
+//         }
+//         return res.status(200).json({ success: true, data: paths })
+//     }
+//     catch(e){
+//         console.log(e)
+//         return res.status(e.status).json({ success: false, error: e.message })
+//     }
+// }
 getPathById = async (req, res, next) => {
     try
     {
         const body = req.body
-        const paths = await Path.find({ _id: body._id })
+        const paths = await Path.find(body)
         if (!paths.length) {
             const error = new Error('Path not found')
             error.status = 404
             throw error
         }
-        return res.status(200).json({ success: true, data: paths })
+        return res.status(200).json({ success: true,length: paths.length, data: paths })
     }
     catch(e){
         console.log(e)
         return res.status(e.status).json({ success: false, error: e.message })
     }
 }
-
 
 getPaths = async (req, res, next) => {
     try
