@@ -39,14 +39,6 @@ createOrganization = (req, res, next) => {
         })
 }
 
-<<<<<<< HEAD
-checkOrganName = async(organ_name) =>{
-    const organization = await Organization.find({ name: organ_name })
-    if (!organization) {
-        return false
-    }
-    return true
-=======
 // title need to be fixed
 checkOrganName = async(req, res, next) =>{
     try
@@ -64,7 +56,6 @@ checkOrganName = async(req, res, next) =>{
         console.log(e)
         return res.status(e.status).json({ success: false, error: e.message })
     }
->>>>>>> 17c8b0d004f2bd21f9228a80f59caccd6f17adf2
   }
 
 module.exports = {
