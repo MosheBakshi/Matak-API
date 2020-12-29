@@ -1,11 +1,13 @@
 const express = require('express')
+const { withJWTAuthMiddleware } = require("express-kun");
 
 const NotificationCtrl = require('../controllers/notification-ctrl')
 
 const router = express.Router()
+const protectedRouter = withJWTAuthMiddleware(router, "Cvbs!#56drsg575jrfsd@23456ewdg1");
 
-router.post('/notification', NotificationCtrl.createNotification)
-router.get('/notification/:id', NotificationCtrl.getNotificationById)
-router.get('/notifications', NotificationCtrl.getNotification)
+protectedRouter.post('/notification', NotificationCtrl.createNotification)
+protectedRouter.get('/notification/:id', NotificationCtrl.getNotificationById)//need to be fixed
+protectedRouter.get('/notifications', NotificationCtrl.getNotification)
 
 module.exports = router

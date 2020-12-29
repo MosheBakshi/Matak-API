@@ -6,30 +6,22 @@ const Schema = mongoose.Schema
 
 const Path = new Schema(
 {
-      path_from: {
-          type: {
-            type: String, // Don't do `{ location: { type: String } }`
-            enum: ['Point'], // 'location.type' must be 'Point'
-            required: true
-          },
-          coordinates: {
-            type: [Number],
-            required: true
-          }
-        },
-      path_to: {
-          type: {
-            type: String, // Don't do `{ location: { type: String } }`
-            enum: ['Point'], // 'location.type' must be 'Point'
-            required: true
-          },
-          coordinates: {
-            type: [Number],
-            required: true
-          }
-        },
-      terms_text: { type: String, required: true },
-      approval_user_id: { type: String, required: false , default: "None"},
+      Array_Of_Points: {type:[[Number]], required: true},
+      Path_From: {type: [Number], required:false},
+      Path_To: {type: [Number], required:false},
+      Terms_Text: { type: String, required: true },
+      Approval_User_Id: { type: String, required: false , default: "None"},
+      Path_Name: { type: String, required: true },
+      Applicant_User_Id: { type: String, required: true , default: "None"},
+      // Start_Date: { type: Date, required: true},
+      // End_Date: { type: Date, required: true},
+      Reason_Text: { type: String, required: true},
+      Involved_Organ_Array: {type: [String], required: true, default: "None"},
+      Escort_Organ_Array: {type: [String], required: true, default: "None"},
+      Vehicles_Id_Involved_Array: { type: [String], required: true, default: "On foot"},
+      Status_Name: {type: String, required: true, default: "Submitted"},
+      Route_Type: { type: String, required: true, default: "Casual"},
+      Remarks: { type: String, required: true}
   },
   { timestamps: true },
 )

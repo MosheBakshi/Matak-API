@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 //Define a schema
 const Schema = mongoose.Schema
 
+//names
 const Notification = new Schema(
 {
         notification_text: { type: String, required: true },

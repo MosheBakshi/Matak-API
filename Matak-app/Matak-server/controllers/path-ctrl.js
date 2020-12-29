@@ -1,4 +1,8 @@
 const Path = require('../models/path-model')
+const Status = require('../models/status-model')
+const StatusCtrl = require('../controllers/status-ctrl')
+const bcrypt = require("bcrypt")
+const db = require('../db')
 
 createPath = (req, res) => {
     const body = req.body
@@ -15,17 +19,16 @@ createPath = (req, res) => {
     if (!path) {
         return res.status(400).json({ success: false, error: err })
     }
-
+    path.Path_From = path.Array_Of_Points[0]
+    path.Path_To = path.Array_Of_Points[path.Array_Of_Points.length-1]
     path
         .save()
         .then(() => {
+
             return res.status(201).json({
                 success: true,
                 id: path._id,
-                terms_text: path.terms_text,
-                approval_user_id: path.approval_user_id,
-                path_from: path.path_from,
-                path_to: path.path_to,
+                path: path,
                 message: 'Path created!',
             })
         })
@@ -37,7 +40,7 @@ createPath = (req, res) => {
         })
 }
 
-updatePath = async (req, res) => {
+updatePath = async (req, res, next) => {
     const body = req.body
 
     if (!body) {
@@ -75,7 +78,7 @@ updatePath = async (req, res) => {
     })
 }
 
-deletePath = async (req, res) => {
+deletePath = async (req, res, next) => {
     await Path.findOneAndDelete({ _id: req.params.id }, (err, path) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
@@ -91,39 +94,30 @@ deletePath = async (req, res) => {
     }).catch(err => console.log(err))
 }
 
-getPathById = async (req, res) => {
-    await Path.findOne({ _id: req.params.id }, (err, path) => {
-        if (err) {
-            return res.status(400).json({ success: false, error: err })
-        }
 
-        if (!path) {
-            return res
-                .status(404)
-                .json({ success: false, error: `Path not found` })
-        }
-        return res.status(200).json({ success: true, data: path })
-    }).catch(err => console.log(err))
-}
-
-getPaths = async (req, res) => {
-    await Path.find({}, (err, paths) => {
-        if (err) {
-            return res.status(400).json({ success: false, error: err })
-        }
+getPathBy = async (req, res, next) => {
+    try
+    {
+        const body = req.body
+        const paths = await Path.find(body)
         if (!paths.length) {
-            return res
-                .status(404)
-                .json({ success: false, error: `Path not found` })
+            const error = new Error('Path not found')
+            error.status = 404
+            throw error
         }
-        return res.status(200).json({ success: true, data: paths })
-    }).catch(err => console.log(err))
+        return res.status(200).json({ success: true,length: paths.length, data: paths })
+    }
+    catch(e){
+        console.log(e)
+        return res.status(e.status).json({ success: false, error: e.message })
+    }
 }
+
+
 
 module.exports = {
     createPath,
     updatePath,
     deletePath,
-    getPaths,
-    getPathById,
+    getPathBy,
 }
