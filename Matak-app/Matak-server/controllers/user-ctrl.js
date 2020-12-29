@@ -1,13 +1,6 @@
 const User = require('../models/user-model')
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt");
-<<<<<<< HEAD
-const organizationCtrl = require('./organization-ctrl');
-const Organization = require('../models/organization-model');
-const organizationModel = require('../models/organization-model');
-
-=======
->>>>>>> 17c8b0d004f2bd21f9228a80f59caccd6f17adf2
 
 
 getAllUsers = async (req, res, next) => {
@@ -22,86 +15,13 @@ getAllUsers = async (req, res, next) => {
       }
       return res.status(200).json({ success: true, data: users })
   }
-<<<<<<< HEAD
-  
-  async function getUserById(req, res) {
-    const user = await User.findOne({
-      _id: req.params.id
-    });
-    res.json({
-      user,
-      message: "Found user successfully"
-    });
-=======
   catch(e){
       console.log(e)
       return res.status(e.status).json({ success: false, error: e.message })
->>>>>>> 17c8b0d004f2bd21f9228a80f59caccd6f17adf2
   }
 }
 
 
-<<<<<<< HEAD
-  async function getUserByFirstName(req, res) {
-    const body = req.body
-    const user = await User.find({
-      name: body.name
-    });
-    res.json({
-      user,
-      message: "Found user successfully"
-    });
-  }
-
-  async function getUserByMobile(req, res) {
-    const body = req.body
-    const user = await User.findOne({
-      mobile: body.mobile
-    });
-    res.json({
-      user,
-      message: "Found user successfully"
-    });
-  }
-
-  async function getUserByEmail(req, res) {
-    const body = req.body
-    const user = await User.findOne({
-      email: body.email
-    });
-    res.json({
-      user,
-      message: "Found user successfully"
-    });
-  }
-
-  getAllUsersByOrganName = async (req, res) => { 
-    try
-    {
-      const body = req.body
-      
-      console.log(organizationCtrl.checkOrganName(body.name))
-      if(organizationCtrl.checkOrganName(body.name)==false){
-        return res.status(404).json({ success: false, error: `organization not valid` })
-      }
-     // const organization = await Organization.findOne({ name: body.name })
-     // if (!organization) {
-      //    return res.status(404).json({ success: false, error: `organization not valid` })
-      //}
-      const users = await User.find({ organ_name: body.name })
-      if (!users.length) {
-          return res
-            .status(404)
-            .json({ success: false, error: `Users not found` })
-      }
-      return res.status(200).json({ success: true, data: users })
-    }
-    catch(error){
-        console.log(error)
-    }
-}
-
-=======
 getUserById = async (req, res, next) => {
   try
     {
@@ -119,7 +39,6 @@ getUserById = async (req, res, next) => {
         return res.status(e.status).json({ success: false, error: e.message })
     }
 }
->>>>>>> 17c8b0d004f2bd21f9228a80f59caccd6f17adf2
 
 getUserByFirstName = async (req, res, next) => {
   try

@@ -22,19 +22,11 @@ const User = new Schema(
             first_name: { type: String, required: true },
             last_name: { type: String, required: true },            
           },
-<<<<<<< HEAD
-        mobile: { type: String, required: true },
-        email: { type: String, required: true },
-        organ_name: { type: String, required: false , default: "None"},
-        username: { type: String, required: true },
-        password: {
-=======
         Mobile: { type: String, required: true },
         Email: { type: String, required: true },
         Organ_name: { type: String, required: false , default: "None"},
         Username: { type: String, required: true },
         Password: {
->>>>>>> 17c8b0d004f2bd21f9228a80f59caccd6f17adf2
           type: String,
           required: true,
           set: setPassword
