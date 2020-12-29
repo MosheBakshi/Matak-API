@@ -16,8 +16,6 @@ const protectedRouter = withJWTAuthMiddleware(router, "Cvbs!#56drsg575jrfsd@2345
 protectedRouter.post('/path', PathCtrl.createPath)
 protectedRouter.put('/path/:id', PathCtrl.updatePath)//need to be fixed
 protectedRouter.delete('/path/:id', PathCtrl.deletePath)//need to be fixed
-router.post('/getpath', PathCtrl.getPathById)//post
-protectedRouter.post('/paths', PathCtrl.getPaths)
-router.post('/PathsByStatus',StatusCtrl.checkStatusByName, PathCtrl.getPathByStatus)
+protectedRouter.post('/getpath', PathCtrl.getPathBy)//post
 
 module.exports = router

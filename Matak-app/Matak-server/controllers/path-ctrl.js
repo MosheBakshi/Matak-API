@@ -94,26 +94,8 @@ deletePath = async (req, res, next) => {
     }).catch(err => console.log(err))
 }
 
-//check path by id
 
-// getPathById = async (req, res, next) => {
-//     try
-//     {
-//         const body = req.body
-//         const paths = await Path.find({ _id: body._id })
-//         if (!paths.length) {
-//             const error = new Error('Path not found')
-//             error.status = 404
-//             throw error
-//         }
-//         return res.status(200).json({ success: true, data: paths })
-//     }
-//     catch(e){
-//         console.log(e)
-//         return res.status(e.status).json({ success: false, error: e.message })
-//     }
-// }
-getPathById = async (req, res, next) => {
+getPathBy = async (req, res, next) => {
     try
     {
         const body = req.body
@@ -131,48 +113,11 @@ getPathById = async (req, res, next) => {
     }
 }
 
-getPaths = async (req, res, next) => {
-    try
-    {
-        const body = req.body
-        const paths = await Path.find({})
-        if (!paths.length) {
-            const error = new Error('Paths not found')
-            error.status = 404
-            throw error
-        }
-        return res.status(200).json({ success: true, data: paths })
-    }
-    catch(e){
-        console.log(e)
-        return res.status(e.status).json({ success: false, error: e.message })
-    }
-}
-
-getPathByStatus = async (req, res, next) => { 
-    try
-    {
-        const body = req.body
-        const paths = await Path.find({ Status_Name: body.Status_Name })
-        if (!paths.length) {
-            const error = new Error('Path not found')
-            error.status = 404
-            throw error
-        }
-        return res.status(200).json({ success: true, data: paths })
-    }
-    catch(e){
-        console.log(e)
-        return res.status(e.status).json({ success: false, error: e.message })
-    }
-}
 
 
 module.exports = {
     createPath,
     updatePath,
     deletePath,
-    getPaths,
-    getPathById,
-    getPathByStatus,
+    getPathBy,
 }
