@@ -1,13 +1,12 @@
 const Status = require('../models/status-model')
 
-
 checkStatusByName = async (req, res, next) => {
     try
     {
         const body = req.body
         const status = await Status.findOne({ Status_Name: body.Status_Name })
         if (!status) {
-            const error = new Error('status not valid')
+            const error = new Error('Status name not valid')
             error.status = 404
             throw error
         }
@@ -19,19 +18,21 @@ checkStatusByName = async (req, res, next) => {
     }
 }
 
-// need to fix
 getStatusByName = async (req, res, next) => {
     try
     {
         const body = req.body
         const status = await Status.findOne({ Status_Name: body.Status_Name })
         if (!status) {
-            return res.status(404).json({ success: false, error: `Status not valid` })
+            const error = new Error('Status name not valid')
+            error.status = 404
+            throw error
         }
-        next(res.status(200).json({ success: true, data: status }))
+        return res.status(200).json({ success: true, data: status })
     }
-    catch (error){
-        console.log(error)
+    catch (e){
+        console.log(e)
+        return res.status(e.status).json({ success: false, error: e.message })
     }
 }
 

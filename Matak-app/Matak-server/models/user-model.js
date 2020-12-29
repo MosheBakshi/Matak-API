@@ -9,31 +9,22 @@ function setPassword(value) {
   return bcrypt.hashSync(value, 10);
 }
 
-//names
-
 const User = new Schema(
     {
-        Name: {
-            type: {
-              type: String, // Don't do `{ name: { type: String } }`
-              enum: ['Name'], // 'name.type' must be 'Name'
-              required: true
-            },
-            first_name: { type: String, required: true },
-            last_name: { type: String, required: true },            
-          },
+        First_Name: { type: String, required: true },
+        Last_Name: { type: String, required: true },            
         Mobile: { type: String, required: true },
         Email: { type: String, required: true },
-        Organ_name: { type: String, required: false , default: "None"},
+        Organ_Name: { type: String, required: false , default: "None"},//fix
         Username: { type: String, required: true },
         Password: {
           type: String,
           required: true,
           set: setPassword
         },
-        User_type: { type: String, enum: ['Arbel','Matak'], required: false } // 'usertype.type' must be 'Arbel'/'Matak'
+        User_type: { type: String, enum: ['Arbel','Matak','Admin'], required: true }
     },
     { timestamps: true },
 )
 
-module.exports = mongoose.model('Users', User)
+module.exports = mongoose.model('users', User)

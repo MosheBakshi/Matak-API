@@ -1,196 +1,95 @@
 const User = require('../models/user-model')
 const jwt = require("jsonwebtoken")
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcrypt")
+const errorHandler = require('../utils/errors')
 
-
-getAllUsers = async (req, res, next) => {
+getUserBy = async (req, res, next) => {
   try
   {
       const body = req.body
-      const users = await User.find({})
+      const users = await User.find(body)
       if (!users.length) {
-          const error = new Error('Users not found')
-          error.status = 404
-          throw error
+          throw errorHandler('Users not found', 404)
       }
       return res.status(200).json({ success: true, data: users })
   }
   catch(e){
       console.log(e)
-      return res.status(e.status).json({ success: false, error: e.message })
+      return res.status(e.statusCode).json({ success: false, error: e.message })
   }
 }
 
-
-getUserById = async (req, res, next) => {
-  try
-    {
-        const body = req.body
-        const users = await User.find({ _id: body._id })
-        if (!users.length) {
-            const error = new Error('User not found')
-            error.status = 404
-            throw error
-        }
-        return res.status(200).json({ success: true, data: users })
-    }
-    catch(e){
-        console.log(e)
-        return res.status(e.status).json({ success: false, error: e.message })
-    }
-}
-
-getUserByFirstName = async (req, res, next) => {
-  try
-    {
-        const body = req.body
-        const users = await User.find({ first_name: body.first_name })
-        if (!users.length) {
-            const error = new Error('User not found')
-            error.status = 404
-            throw error
-        }
-        return res.status(200).json({ success: true, data: users })
-    }
-    catch(e){
-        console.log(e)
-        return res.status(e.status).json({ success: false, error: e.message })
-    }
-}
-
-getUserByMobile = async (req, res, next) => {
-  try
-    {
-        const body = req.body
-        const users = await User.find({ mobile: body.Mobile })
-        if (!users.length) {
-            const error = new Error('User not found')
-            error.status = 404
-            throw error
-        }
-        return res.status(200).json({ success: true, data: users })
-    }
-    catch(e){
-        console.log(e)
-        return res.status(e.status).json({ success: false, error: e.message })
-    }
-}
-
-getUserByEmail = async (req, res, next) => {
-  try
-    {
-        const body = req.body
-        const users = await User.find({ Email: body.Email })
-        if (!users.length) {
-            const error = new Error('User not found')
-            error.status = 404
-            throw error
-        }
-        return res.status(200).json({ success: true, data: users })
-    }
-    catch(e){
-        console.log(e)
-        return res.status(e.status).json({ success: false, error: e.message })
-    }
-}
-
-getAllUsersByOrganName = async (req, res, next) => { 
-  try
-  {
-    const body = req.body
-    const users = await User.find({ organ_name: body.Name })
-    if (!users.length) {
-      const error = new Error('User not found')
-      error.status = 404
-      throw error
-    }
-    return res.status(200).json({ success: true, data: users })
-    
-  }
-  catch(e)
-  {
-      console.log(e)
-      return res.status(e.status).json({ success: false, error: e.message })
-  }
-}
-
-
-//Tabs
 loginUser = async (req, res, next) => {
-  const { username, password } = req.body;
-  const user = await User.findOne({
-    username
-  });
-
-  if (!user) {
-    throw Error("User not found");
-  }
-  if (bcrypt.compareSync(password, user.password)) {
-    const token = jwt.sign({ user }, "Cvbs!#56drsg575jrfsd@23456ewdg1", {
-      expiresIn: "24h"
-    });
-
-    res.json({
-      user,
-      token,
-      message: "Logged in successfully"
-    });
-  } else {
-    res.status(401).json({
-      message: "Unauthenticated"
-    });
-  }
-}
-
-
-createUser = (req, res) => {
+  try
+  {
     const body = req.body
-
-    if (!body) {
-        return res.status(400).json({
-            success: false,
-            error: 'You must provide a user',
-        })
-    }
-
-    const user = new User(body)
+    const user = await User.findOne({Username : body.Username})
 
     if (!user) {
-        return res.status(400).json({ success: false, error: err })
+      throw errorHandler('Username or password not valid', 404)
     }
 
-    user
-        .save()
-        .then(() => {
-            return res.status(201).json({
-                success: true,
-                id: user._id,
-                first_name: user.first_name,
-                last_name: user.last_name,
-                mobile: user.mobile,
-                email: user.email,
-                organ_id: user.organ_id,
-                username: user.username,
-                password: user.password,
-                usertype: user.usertype,
-                message: 'User created!',
-            })
-        })
-        .catch(error => {
-            return res.status(400).json({
-                error,
-                message: 'User not created!',
-            })
-        })
+    if (bcrypt.compareSync(body.Password, user.Password)) {
+      const token = jwt.sign({ user }, "Cvbs!#56drsg575jrfsd@23456ewdg1", {
+        expiresIn: "24h"
+      });
+      return res.status(200).json({success: true, username: user.Username, token: token, id: user._id});
+    }
+
+    else {
+      throw errorHandler('Username or Password not valid',401)
+    }
+  }
+  catch (e){
+    console.log(e)
+    return res.status(e.statusCode).json({ success: false, error: e.message })
+  }
+}
+
+
+createUser = async (req, res, next) => {
+    try
+    {
+      const body = req.body
+      const user = new User(body)
+
+      if (!user) {
+        throw errorHandler('User not Created', 400)
+      }
+
+      const Username_Exists = await User.findOne({Username : body.Username})
+      if (Username_Exists) {
+        throw errorHandler('Username already exists', 409)
+      }
+      
+      const Email_Exists = await User.findOne({Email : body.Email})
+      if (Email_Exists) {
+        throw errorHandler('Email already exists', 409)
+      }
+
+      user
+          .save()
+          .then(() => {
+              return res.status(201).json({
+                  success: true,
+                  data: user
+              })
+          })
+          .catch(error => {
+              return res.status(400).json({
+                  error,
+                  message: 'User not created!',
+              })
+          })
+    }
+    catch (e){
+      console.log(e)
+      return res.status(e.statusCode).json({ success: false, error: e.message })
+    }
 }
 
 module.exports = {
     createUser,
     loginUser,
-    getUserById,
-    getAllUsers,
-    getUserByMobile,
-    getUserByEmail,
-    getUserByFirstName,
-    getAllUsersByOrganName
+    getUserBy,
 }
