@@ -7,17 +7,11 @@ const router = express.Router()
 
 const protectedRouter = withJWTAuthMiddleware(router, "Cvbs!#56drsg575jrfsd@23456ewdg1");
 
-// POSTS
-router.post('/user', UserCtrl.createUser)
-router.post('/user/login',UserCtrl.loginUser)
-protectedRouter.post('/user/mobile',UserCtrl.getUserByMobile)
-protectedRouter.post('/user/email',UserCtrl.getUserByEmail)
-protectedRouter.post('/user/first_name',UserCtrl.getUserByFirstName)
-router.post('/user/organ', OrganCtrl.checkOrganName, UserCtrl.getAllUsersByOrganName)
-
-// GETS
-protectedRouter.get('/users', UserCtrl.getAllUsers)
-protectedRouter.get('/user/:id', UserCtrl.getUserById)//need to be fixed
+protectedRouter.get('/users', UserCtrl.getUserBy)
+router.post('/users',OrganCtrl.checkOrganName, UserCtrl.createUser)
+router.post('/users/login',UserCtrl.loginUser)
+// protectedRouter.put('/users', UserCtrl.updateUser)
+// protectedRouter.delete('users', UserCtrl.deleteUser)
 
 
 module.exports = router

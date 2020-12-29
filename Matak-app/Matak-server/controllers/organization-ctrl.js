@@ -39,12 +39,11 @@ createOrganization = (req, res, next) => {
         })
 }
 
-// title need to be fixed
 checkOrganName = async(req, res, next) =>{
     try
     {
         const body = req.body
-        const organ = await Organization.findOne({ Name: body.Name })
+        const organ = await Organization.findOne({ Name: body.Organ_Name })
         if (!organ) {
             const error = new Error('Organization name not valid')
             error.status = 404
@@ -56,7 +55,7 @@ checkOrganName = async(req, res, next) =>{
         console.log(e)
         return res.status(e.status).json({ success: false, error: e.message })
     }
-  }
+}
 
 module.exports = {
     createOrganization,
