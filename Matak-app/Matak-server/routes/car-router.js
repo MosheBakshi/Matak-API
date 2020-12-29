@@ -7,9 +7,9 @@ const router = express.Router()
 const protectedRouter = withJWTAuthMiddleware(router, "Cvbs!#56drsg575jrfsd@23456ewdg1");
 
 
-protectedRouter.post('/car', CarCtrl.createCar)
-protectedRouter.put('/car/:id', CarCtrl.updateCar)//need to be fixed
-protectedRouter.delete('/car/:id', CarCtrl.deleteCar)//need to be fixed
-protectedRouter.post('/getcar', CarCtrl.getCarBy)//post
+router.post('/car', CarCtrl.createCar)
+router.put('/car/:id', CarCtrl.updateCar)//need to be fixed
+router.delete('/car', CarCtrl.deleteCar)//need to be fixed
+router.get('/car', CarCtrl.getCarBy)//get
 
 module.exports = router

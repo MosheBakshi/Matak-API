@@ -4,15 +4,14 @@ const mongoose = require('mongoose')
 //Define a schema
 const Schema = mongoose.Schema
 
-//names
 const Car = new Schema(
 {
-        type: { type: String, required: true },
-        car_model: { type: String, required: true },
-        color: { type: String, required: true },
-        organization_id: { type: String, required: true },//to be fixed
-        liecene_number: { type: String, required: true},
-        contact_name: { type: String, required: true },
+        Type: { type: String, required: true },
+        Car_Model: { type: String, required: true },
+        Color: { type: String, required: true },
+        Organization_Id: { type: String, required: true },//to be fixed
+        Liecene_Number: { type: String, required: true},
+        Contact_Name: { type: String, required: true },
   },
   { timestamps: true },
 )

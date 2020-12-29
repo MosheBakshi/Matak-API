@@ -78,20 +78,21 @@ updateCar = async (req, res, next) => {
     })
 }
 
-deleteCar = async (req, res, next) => {
-    await Car.findOneAndDelete({ _id: req.params.id }, (err, car) => {
-        if (err) {
-            return res.status(400).json({ success: false, error: err })
-        }
-
+deleteCar = async (req, res, next) => {//need to fix
+    try{
+        const body = req.body
+        const car = await Car.findOneAndDelete({ _id: body._id })
         if (!car) {
-            return res
-                .status(404)
-                .json({ success: false, error: `Car not found` })
+            const error = new Error('Car not found')
+            error.status = 404
+            throw error
         }
-
         return res.status(200).json({ success: true, data: car })
-    }).catch(err => console.log(err))
+    }
+    catch(e){
+        console.log(e)
+        return res.status(e.status).json({ success: false, error: e.message })
+    }
 }
 
 getCarBy = async (req, res, next) => {
