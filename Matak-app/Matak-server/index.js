@@ -36,5 +36,4 @@ app.use('/api', notificationRouter)
 
 app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`))
 
-//latest update for pulling queries modular way
-// comments added where needed
+//latest update for organization, car, path, user ctrls - using crud model, user ctrl using allready errHandeler
