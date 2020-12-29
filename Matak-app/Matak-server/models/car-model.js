@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 //Define a schema
 const Schema = mongoose.Schema
 
+//names
 const Car = new Schema(
 {
         type: { type: String, required: true },

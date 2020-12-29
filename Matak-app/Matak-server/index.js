@@ -33,6 +33,7 @@ app.use('/api', organizationRouter)
 app.use('/api', statusRouter)
 app.use('/api', carRouter)
 app.use('/api', notificationRouter)
+<<<<<<< HEAD
 //
 app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`))
 
@@ -40,3 +41,10 @@ app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`))
 
 
 // updated for or's
+=======
+
+app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`))
+
+//latest update for pulling queries modular way
+// comments added where needed
+>>>>>>> 17c8b0d004f2bd21f9228a80f59caccd6f17adf2
