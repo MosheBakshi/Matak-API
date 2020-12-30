@@ -1,68 +1,80 @@
 const Organization = require('../models/organization-model')
-const errorHandler = require('../utils/errors')
-
 
 createOrganization = (req, res, next) => {
-    try{
-        const body = req.body
-        if (!body) {
-            throw errorHandler('You must provide a body to update', 400)
-        }
+    const body = req.body
 
-        const organization = new Organization(body)
+    if (!body) {
+        return res.status(400).json({
+            success: false,
+            error: 'You must provide a Organization',
+        })
+    }
 
-        if (!organization) {
-            throw errorHandler('Organization scheme didn\'t allocated', 400)
-        }
+    const organization = new Organization(body)
 
-        organization
-            .save()
-            .then(() => {
-                return res.status(201).json({
-                    success: true,
-                    id: organization._id,
-                    name: organization.name,
-                    contact: organization.contact,
-                    mobile: organization.mobile,
-                    email: organization.email,
-                    fax: organization.fax,
-                    country: organization.country,
-                    message: 'Organization created!',
-                })
+    if (!organization) {
+        return res.status(400).json({ success: false, error: err })
+    }
+
+    organization
+        .save()
+        .then(() => {
+            return res.status(201).json({
+                success: true,
+                id: organization._id,
+                name: organization.name,
+                contact: organization.contact,
+                mobile: organization.mobile,
+                email: organization.email,
+                fax: organization.fax,
+                country: organization.country,
+                message: 'Organization created!',
             })
-    }
-    catch(e){
-        console.log(e)
-        return res.status(e.status).json({ success: false, error: e.message })
-    }
+        })
+        .catch(error => {
+            return res.status(400).json({
+                error,
+                message: 'Organization not created!',
+            })
+        })
 }
 
 deleteOrgan = async (req, res, next) => {
-    try{
-        const body = req.body
-        const organ = await Organization.findOneAndDelete({ _id: body._id })
-            if (!organ) {
-                throw errorHandler('Organization not found', 404)
-            }
-            return res.status(200).json({ success: true, data: organ })
+    const body = req.body
+    await Organization.findOneAndDelete({ _id: body._id }, (err, organ) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
         }
-    catch(e){
-        console.log(e)
-        return res.status(e.status).json({ success: false, error: e.message })
-    }
+
+        if (!organ) {
+            return res
+                .status(404)
+                .json({ success: false, error: `Organization not found` })
+        }
+
+        return res.status(200).json({ success: true, data: organ })
+    }).catch(err => console.log(err))
 }
 
 
 updateOrgan = async (req, res, next) => {
-    try{
     const body = req.body
     if (!body) {
-        throw errorHandler('You must provide a body to update', 400)
+        return res.status(400).json({
+            success: false, 
+            error: `Body not found` })
     }
 
-        const organ = await Organization.findOneAndUpdate({_id: body._id},{$set:req.body})
+        await Organization.findOneAndUpdate({_id: body._id},{$set:req.body}, (err, organ) =>{
+        
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+        
         if (!organ) {
-            throw errorHandler('Organization not found!', 404)
+            return res.status(404).json({
+                success: false, 
+                error: `Organization not found` })
         }
         organ.$set(req.body)
             .save()
@@ -73,14 +85,10 @@ updateOrgan = async (req, res, next) => {
                 })
             })
             .catch(er => {
-                throw errorHandler('Organization not updated!', 404)
+                return res.status(404).json({
+                    success: false, error: `Organization not updated` })
             })
-        
-    }
-    catch(e){
-        console.log(e)
-        return res.status(e.status).json({ success: false, error: e.message })
-    }
+        })
 }
 
 /* find organization by any data */
@@ -90,7 +98,9 @@ getOrganBy = async(req, res, next) =>{
         const body = req.body
         const organ = await Organization.find(body)
         if (!organ) {
-            throw errorHandler('Organization name not valid', 404)
+            const error = new Error('Organization name not valid')
+            error.status = 404
+            throw error
         }
         // next()
         return res.status(200).json({ success: true,length: organ.length, data: organ })
@@ -107,7 +117,9 @@ checkOrganName = async(req, res, next) =>{
         const body = req.body
         const organ = await Organization.findOne({ Name: body.Organ_Name })
         if (!organ) {
-            throw errorHandler('Organization name not valid', 404)
+            const error = new Error('Organization name not valid')
+            error.status = 404
+            throw error
         }
         next()
     }
