@@ -30,10 +30,7 @@ createOrganization = (req, res, next) => {
                     message: 'Organization created!',
                 })
             })
-            .catch(error => {
-                throw errorHandler('Organization not created', 404)
-            })
-        }
+    }
     catch(e){
         console.log(e)
         return res.status(e.status).json({ success: false, error: e.message })
