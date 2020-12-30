@@ -81,6 +81,7 @@ updateOrgan = async (req, res, next) => {
             .then(() => {
                 return res.status(200).json({
                     success: true,
+                    organ: organ,
                     message: 'Organization updated!',
                 })
             })
