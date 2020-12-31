@@ -9,7 +9,7 @@ const Car = new Schema(
         Type: { type: String, required: true },
         Car_Model: { type: String, required: true },
         Color: { type: String, required: true },
-        Organization_Name: { type: String, required: true },//to be fixed
+        Organization_Name: { type: String, required: true },
         Liecene_Number: { type: String, required: true},
         Contact_Name: { type: String, required: true },
   },

@@ -1,6 +1,6 @@
 const Car = require('../models/car-model')
 
-createCar = (req, res, next) => {
+createCar = async (req, res, next) => {
     const body = req.body
 
     if (!body) {
@@ -10,24 +10,30 @@ createCar = (req, res, next) => {
         })
     }
 
+    try
+    {
+    const Liecene_Number_Exists = await Car.findOne({Liecene_Number : body.Liecene_Number})
+    if (Liecene_Number_Exists) {
+        return res.status(400).json({ success: false, error: 'Liecene number already exists' })
+      }
+    }
+    catch(error){
+      return res.status(500).json({ success: false, error: error })
+    }
+
     const car = new Car(body)
 
     if (!car) {
         return res.status(400).json({ success: false, error: err })
     }
+    
 
     car
         .save()
         .then(() => {
             return res.status(201).json({
                 success: true,
-                id: car._id,
-                type: car.type,
-                car_model: car.car_model,
-                color: car.color,
-                organization_name: car.organization_name, 
-                liecene_number: car.liecene_number,
-                contact_name: car.contact_name,
+                data: car,
                 message: 'Car created!',
             })
         })
