@@ -8,8 +8,8 @@ const protectedRouter = withJWTAuthMiddleware(router, "Cvbs!#56drsg575jrfsd@2345
 
 
 router.post('/car', CarCtrl.createCar)
-router.put('/car/:id', CarCtrl.updateCar)//need to be fixed
-router.delete('/car', CarCtrl.deleteCar)//need to be fixed
-router.get('/car', CarCtrl.getCarBy)//get
+router.put('/car/', CarCtrl.updateCar)
+router.delete('/car', CarCtrl.deleteCar)
+router.get('/car', CarCtrl.getCarBy)
 
 module.exports = router
