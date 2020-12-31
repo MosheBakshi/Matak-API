@@ -134,14 +134,49 @@ getNotification = async (req, res, next) => {
     }
 }
 
-
-
-
+// inbox 
+getNotificationBySenderName = async (req, res, next) => {
+    try
+    {
+        const body = req.body
+        const notification = await Notification.find({sender_id : body.sender_id})
+        if(!notification.length){
+            const error = new Error ('There are no notifications from ' + body.sender_id)
+            error.status =404
+            throw error
+        }
+        return res.status(200).json({success :true , data : notification})
+    }
+    catch(e){
+        console.log(e)
+        return res.status(e.status).json({success : false , error : e.message})
+    }
+}
+ // outbox 
+ getNotificationByRecieverName = async (req, res, next) => {
+    try
+    {
+        const body = req.body
+        const notification = await Notification.find({receiver_id : body.receiver_id})
+        if(!notification.length){
+            const error = new Error ('There are no notifications to ' + body.receiver_id)
+            error.status =404
+            throw error
+        }
+        return res.status(200).json({success :true , data : notification})
+    }
+    catch(e){
+        console.log(e)
+        return res.status(e.status).json({success : false , error : e.message})
+    }
+}
 module.exports = {
     createNotification,
     getNotification,
     getNotificationById,
     updateNotification,
-    deleteNotification
+    deleteNotification,
+    getNotificationBySenderName,
+    getNotificationByRecieverName
 
 }

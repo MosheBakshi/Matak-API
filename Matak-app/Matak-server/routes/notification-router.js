@@ -8,6 +8,8 @@ const protectedRouter = withJWTAuthMiddleware(router, "Cvbs!#56drsg575jrfsd@2345
 router.post('/notification', NotificationCtrl.createNotification)
 router.post('/getnoteby', NotificationCtrl.getNotificationById)
 router.post('/notifications', NotificationCtrl.getNotification)
+router.post('/inbox',NotificationCtrl.getNotificationBySenderName)
+router.post('/outbox',NotificationCtrl.getNotificationByRecieverName)
 router.put('/notification', NotificationCtrl.updateNotification)
 router.delete('/notification', NotificationCtrl.deleteNotification)
 module.exports = router
