@@ -40,7 +40,7 @@ createNotification = (req, res, next) => {
         })
 }
 
-//Delete
+//Delete - to be fixed (Moshe wrote)
 deleteNotification = async (req, res, next) => {
     try{
         const body = req.body
@@ -58,7 +58,7 @@ deleteNotification = async (req, res, next) => {
     }
 }
 
-// update 
+// update - to be fixed (Moshe wrote)
 updateNotification = async (req, res, next) => {
     try{
     const body = req.body
@@ -114,27 +114,6 @@ getNotificationById = async (req, res, next) => {
         return res.status(e.status).json({success : false , error : e.message})
     }
 }
-
-
-getNotification = async (req, res, next) => {
-    try
-    {
-        const body = req.body
-        const notification = await Notification.find({})
-        if(!notification.length){
-            const error = new Error ('Tehere are no notifications')
-            error.status =404
-            throw error
-        }
-        return res.status(200).json({success :true , data : notification})
-    }
-    catch(e){
-        console.log(e)
-        return res.status(e.status).json({success : false , error : e.message})
-    }
-}
-
-
 
 
 module.exports = {
