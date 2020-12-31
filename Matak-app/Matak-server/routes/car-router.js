@@ -2,14 +2,16 @@ const express = require('express')
 const { withJWTAuthMiddleware } = require("express-kun");
 
 const CarCtrl = require('../controllers/car-ctrl')
+const OrganCtrl = require('../controllers/organization-ctrl')
+
 
 const router = express.Router()
 const protectedRouter = withJWTAuthMiddleware(router, "Cvbs!#56drsg575jrfsd@23456ewdg1");
 
 
-router.post('/car', CarCtrl.createCar)
-router.put('/car/:id', CarCtrl.updateCar)//need to be fixed
-router.delete('/car', CarCtrl.deleteCar)//need to be fixed
-router.get('/car', CarCtrl.getCarBy)//get
+router.post('/car',OrganCtrl.checkOrganName, CarCtrl.createCar)
+router.put('/car', CarCtrl.updateCar)
+router.delete('/car', CarCtrl.deleteCar)
+router.get('/car', CarCtrl.getCarBy)
 
 module.exports = router
