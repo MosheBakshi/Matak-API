@@ -40,57 +40,56 @@ createOrganization = (req, res, next) => {
 }
 
 deleteOrgan = async (req, res, next) => {
-    try{
-        const body = req.body
-        const organ = await Organization.findOneAndDelete({ _id: body._id })
-            if (!organ) {
-                const error = new Error('Organization not found')
-                error.status = 404
-                throw error
-            }
-            return res.status(200).json({ success: true, data: organ })
+    const body = req.body
+    await Organization.findOneAndDelete({ _id: body._id }, (err, organ) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
         }
-    catch(e){
-        console.log(e)
-        return res.status(e.status).json({ success: false, error: e.message })
-    }
+
+        if (!organ) {
+            return res
+                .status(404)
+                .json({ success: false, error: `Organization not found` })
+        }
+
+        return res.status(200).json({ success: true, data: organ })
+    }).catch(err => console.log(err))
 }
 
 
 updateOrgan = async (req, res, next) => {
-    try{
     const body = req.body
     if (!body) {
-        const error = new Error('You must provide a body to update')
-        error.status = 400
-        throw error
+        return res.status(400).json({
+            success: false, 
+            error: `Body not found` })
     }
 
-        const organ = await Organization.findOneAndUpdate({_id: body._id},{$set:req.body})
+        await Organization.findOneAndUpdate({_id: body._id},{$set:req.body}, (err, organ) =>{
+        
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+        
         if (!organ) {
-            const error = new Error('Organization not found!')
-            error.status = 404
-            throw error
+            return res.status(404).json({
+                success: false, 
+                error: `Organization not found` })
         }
         organ.$set(req.body)
             .save()
             .then(() => {
                 return res.status(200).json({
                     success: true,
+                    organ: organ,
                     message: 'Organization updated!',
                 })
             })
             .catch(er => {
-                const err = new Error('Organization not updated!')
-                err.status = 404
-                throw err
+                return res.status(404).json({
+                    success: false, error: `Organization not updated` })
             })
-        
-    }
-    catch(e){
-        console.log(e)
-        return res.status(e.status).json({ success: false, error: e.message })
-    }
+        })
 }
 
 /* find organization by any data */

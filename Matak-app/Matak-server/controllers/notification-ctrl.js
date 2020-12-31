@@ -1,5 +1,7 @@
 const Notification = require('../models/notification-model')
 
+/* just skeleton */
+
 // create
 createNotification = (req, res, next) => {
     const body = req.body
