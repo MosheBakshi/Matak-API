@@ -85,7 +85,7 @@ updateOrgan = async (req, res, next) => {
                     message: 'Organization updated!',
                 })
             })
-            .catch(er => {
+            .catch(error => {
                 return res.status(404).json({
                     success: false, error: `Organization not updated` })
             })
@@ -116,7 +116,7 @@ checkOrganName = async(req, res, next) =>{
     try
     {
         const body = req.body
-        const organ = await Organization.findOne({ Name: body.Organ_Name })
+        const organ = await Organization.findOne({ Name: body.Organization_Name })
         if (!organ) {
             const error = new Error('Organization name not valid')
             error.status = 404

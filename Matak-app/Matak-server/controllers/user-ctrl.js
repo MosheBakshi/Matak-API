@@ -48,48 +48,97 @@ loginUser = async (req, res, next) => {
 
 
 createUser = async (req, res, next) => {
+    const body = req.body
+    if (!body) {
+      return res.status(400).json({success: false,error: 'You must provide a user data',})
+    }
+    const user = new User(body)
+
+    if (!user) {
+      return res.status(400).json({ success: false, error: err })
+    }
+
     try
     {
-      const body = req.body
-      const user = new User(body)
+    const Username_Exists = await User.findOne({Username : body.Username})
+    if (Username_Exists) {
+        return res.status(400).json({ success: false, error: 'Username already exists' })
+      }
+    }
+    catch(error){
+      return res.status(500).json({ success: false, error: error })
+    }
+
+    user
+        .save()
+        .then(() => {
+            return res.status(201).json({
+                success: true,
+                data: user
+            })
+        })
+        .catch(error => {
+            return res.status(400).json({
+                error,
+                message: 'User not created!',
+            })
+        })
+}
+
+deleteUser = async (req, res, next) => {
+  const body = req.body
+  await User.findOneAndDelete({ _id: body._id }, (err, user) => {
+      if (err) {
+          return res.status(400).json({ success: false, error: err })
+      }
 
       if (!user) {
-        throw errorHandler('User not Created', 400)
+          return res
+              .status(404)
+              .json({ success: false, error: `User not found` })
       }
+      return res.status(200).json({ success: true, data: user })
+  }).catch(err => console.log(err))
+}
 
-      const Username_Exists = await User.findOne({Username : body.Username})
-      if (Username_Exists) {
-        throw errorHandler('Username already exists', 409)
-      }
-      
-      const Email_Exists = await User.findOne({Email : body.Email})
-      if (Email_Exists) {
-        throw errorHandler('Email already exists', 409)
-      }
-
-      user
-          .save()
-          .then(() => {
-              return res.status(201).json({
-                  success: true,
-                  data: user
-              })
-          })
-          .catch(error => {
-              return res.status(400).json({
-                  error,
-                  message: 'User not created!',
-              })
-          })
+updateUser = async (req, res, next) => {
+    const body = req.body
+    if (!body) {
+        return res.status(400).json({
+            success: false, 
+            error: `Body not found` })
     }
-    catch (e){
-      console.log(e)
-      return res.status(e.statusCode).json({ success: false, error: e.message })
+    await User.findOneAndUpdate({_id: body._id},{$set:req.body}, (err, user) =>{
+    
+    if (err) {
+        return res.status(400).json({ success: false, error: err })
     }
+    
+    if (!user) {
+        return res.status(404).json({
+            success: false, 
+            error: `User not found` })
+    }
+    user.$set(req.body)
+        .save()
+        .then(() => {
+            return res.status(200).json({
+                success: true,
+                user: user,
+                message: 'User updated!',
+            })
+        })
+        .catch(error => {
+            return res.status(404).json({
+                success: false, error: `User not updated` })
+        })
+    })
 }
 
 module.exports = {
-    createUser,
-    loginUser,
-    getUserBy,
+  getUserBy,
+  loginUser,
+  createUser,
+  deleteUser,
+  updateUser
 }
