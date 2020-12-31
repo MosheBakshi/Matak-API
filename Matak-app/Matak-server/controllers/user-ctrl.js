@@ -46,18 +46,12 @@ loginUser = async (req, res, next) => {
   }
 }
 
-
+//checked
 createUser = async (req, res, next) => {
     const body = req.body
     if (!body) {
       return res.status(400).json({success: false,error: 'You must provide a user data',})
     }
-    const user = new User(body)
-
-    if (!user) {
-      return res.status(400).json({ success: false, error: err })
-    }
-
     try
     {
     const Username_Exists = await User.findOne({Username : body.Username})
@@ -68,6 +62,14 @@ createUser = async (req, res, next) => {
     catch(error){
       return res.status(500).json({ success: false, error: error })
     }
+
+    const user = new User(body)
+
+    if (!user) {
+      return res.status(400).json({ success: false, error: err })
+    }
+
+
 
     user
         .save()
@@ -85,6 +87,7 @@ createUser = async (req, res, next) => {
         })
 }
 
+//checked
 deleteUser = async (req, res, next) => {
   const body = req.body
   await User.findOneAndDelete({ _id: body._id }, (err, user) => {
