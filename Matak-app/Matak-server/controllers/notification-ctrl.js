@@ -48,6 +48,7 @@ updateNotification = async (req, res, next) => {
             error: `Body not found` })
     }
 
+    
         await Notification.findOneAndUpdate({_id: body._id},{$set:body}, (err, notification) =>{
         
         if (err) {
