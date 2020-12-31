@@ -68,13 +68,13 @@ updateNotification = async (req, res, next) => {
         throw error
     }
 
-        const notification = await Notification.findOneAndUpdate({_id: body._id},{$set:req.body})
+        const notification = await Notification.findOneAndUpdate({_id: body._id},{$set:body})
         if (!notification) {
             const error = new Error('Notification not found!')
             error.status = 404
             throw error
         }
-        notification.$set(req.body)
+        notification.$set(body.notification_text)
             .save()
             .then(() => {
                 return res.status(200).json({
@@ -95,37 +95,47 @@ updateNotification = async (req, res, next) => {
     }
 }
  
-// fix to post
+
+
 getNotificationById = async (req, res, next) => {
-    await Notification.findOne({ _id: req.params.id }, (err, notification) => {
-        if (err) {
-            return res.status(400).json({ success: false, error: err })
+    try
+    {
+        const body = req.body
+        const notification = await Notification.findById(body._id)
+        if(!notification){
+            const error = new Error ('Notification not found')
+            error.status =404
+            throw error
         }
-
-        if (!notification) {
-            return res
-                .status(404)
-                .json({ success: false, error: `Notification not found` })
-        }
-        return res.status(200).json({ success: true, data: notification })
-    }).catch(err => console.log(err))
+        return res.status(200).json({success :true , data : notification})
+    }
+    catch(e){
+        console.log(e)
+        return res.status(e.status).json({success : false , error : e.message})
+    }
 }
 
 
-// body to fix
 getNotification = async (req, res, next) => {
-    await Notification.find({}, (err, notification) => {
-        if (err) {
-            return res.status(400).json({ success: false, error: err })
+    try
+    {
+        const body = req.body
+        const notification = await Notification.find({})
+        if(!notification.length){
+            const error = new Error ('Tehere are no notifications')
+            error.status =404
+            throw error
         }
-        if (!notification.length) {
-            return res
-                .status(404)
-                .json({ success: false, error: `Notification not found` })
-        }
-        return res.status(200).json({ success: true, data: notification })
-    }).catch(err => console.log(err))
+        return res.status(200).json({success :true , data : notification})
+    }
+    catch(e){
+        console.log(e)
+        return res.status(e.status).json({success : false , error : e.message})
+    }
 }
+
+
+
 
 module.exports = {
     createNotification,
