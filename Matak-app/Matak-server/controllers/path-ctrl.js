@@ -2,7 +2,6 @@ const Path = require('../models/path-model')
 const Status = require('../models/status-model')
 const StatusCtrl = require('../controllers/status-ctrl')
 const bcrypt = require("bcrypt")
-const db = require('../db')
 
 createPath = (req, res) => {
     const body = req.body

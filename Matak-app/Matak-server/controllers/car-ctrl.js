@@ -1,6 +1,5 @@
 const Car = require('../models/car-model')
 
-// need to add update,get,getby...
 createCar = (req, res, next) => {
     const body = req.body
 
