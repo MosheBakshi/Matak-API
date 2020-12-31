@@ -40,62 +40,57 @@ createNotification = (req, res, next) => {
         })
 }
 
-//Delete - to be fixed (Moshe wrote)
-deleteNotification = async (req, res, next) => {
-    try{
-        const body = req.body
-        const notification = await Notification.findOneAndDelete({ _id: body._id })
-            if (!notification) {
-                const error = new Error('Notification not found')
-                error.status = 404
-                throw error
-            }
-            return res.status(200).json({ success: true, data: notification })
-        }
-    catch(e){
-        console.log(e)
-        return res.status(e.status).json({ success: false, error: e.message })
-    }
-}
-
-// update - to be fixed (Moshe wrote)
 updateNotification = async (req, res, next) => {
-    try{
     const body = req.body
     if (!body) {
-        const error = new Error('You must provide a body to update')
-        error.status = 400
-        throw error
+        return res.status(400).json({
+            success: false, 
+            error: `Body not found` })
     }
 
-        const notification = await Notification.findOneAndUpdate({_id: body._id},{$set:body})
-        if (!notification) {
-            const error = new Error('Notification not found!')
-            error.status = 404
-            throw error
+    
+        await Notification.findOneAndUpdate({_id: body._id},{$set:body}, (err, notification) =>{
+        
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
         }
-        notification.$set(body.notification_text)
+        
+        if (!notification) {
+            return res.status(404).json({
+                success: false, 
+                error: `Notification not found` })
+        }
+        notification.$set(body)
             .save()
             .then(() => {
                 return res.status(200).json({
                     success: true,
+                    notification : notification,
                     message: 'Notification updated!',
                 })
             })
             .catch(er => {
-                const err = new Error('Notification not updated!')
-                err.status = 404
-                throw err
+                return res.status(404).json({
+                    success: false, error: `Notification not updated` })
             })
-        
-    }
-    catch(e){
-        console.log(e)
-        return res.status(e.status).json({ success: false, error: e.message })
-    }
+        })
 }
- 
 
+deleteNotification  = async (req, res, next) => {
+    const body = req.body
+    await Notification.findOneAndDelete({ _id: body._id }, (err, notification) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+  
+        if (!notification) {
+            return res
+                .status(404)
+                .json({ success: false, error: `Notification not found` })
+        }
+        return res.status(200).json({ success: true, data: notification })
+    }).catch(err => console.log(err))
+  }
 
 getNotificationBy = async (req, res, next) => {
     try
