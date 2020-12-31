@@ -112,5 +112,4 @@ module.exports = {
     updateCar,
     deleteCar,
     getCarBy,
-    updateCar,
 }
