@@ -25,7 +25,7 @@ createCar = (req, res, next) => {
                 type: car.type,
                 car_model: car.car_model,
                 color: car.color,
-                organization_id: car.organization_id, 
+                organization_name: car.organization_name, 
                 liecene_number: car.liecene_number,
                 contact_name: car.contact_name,
                 message: 'Car created!',
