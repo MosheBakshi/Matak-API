@@ -4,6 +4,18 @@ const bcrypt = require("bcrypt")
 const errorHandler = require('../utils/errors')
 
 getUserBy = async (req, res, next) => {
+  //Verify
+  const token = req.headers['authorization'].split(' ')[1]
+  console.log(token)
+  jwt.verify(token, 'Cvbs!#56drsg575jrfsd@23456ewdg1', (err, decodedToken) => {
+    if(err) {
+      console.log(err)
+    }
+    else {
+     console.log(decodedToken.user._id)    
+    }
+    });
+    //
   try
   {
       const body = req.body
@@ -20,30 +32,21 @@ getUserBy = async (req, res, next) => {
 }
 
 loginUser = async (req, res, next) => {
-  try
-  {
     const body = req.body
-    const user = await User.findOne({Username : body.Username})
-
+    await User.findOne({Username : body.Username}, (err,user) => {
     if (!user) {
-      throw errorHandler('Username or password not valid', 404)
+      return res.status(404).json({success: false,error: 'Username or password not valid'})
     }
-
     if (bcrypt.compareSync(body.Password, user.Password)) {
       const token = jwt.sign({ user }, "Cvbs!#56drsg575jrfsd@23456ewdg1", {
         expiresIn: "24h"
       });
       return res.status(200).json({success: true, username: user.Username, token: token, id: user._id});
     }
-
     else {
-      throw errorHandler('Username or Password not valid',401)
+      return res.status(401).json({success: false,error: 'Username or Password not valid'})
     }
-  }
-  catch (e){
-    console.log(e)
-    return res.status(e.statusCode).json({ success: false, error: e.message })
-  }
+  }).catch(err => console.log(err))
 }
 
 //checked
@@ -52,24 +55,12 @@ createUser = async (req, res, next) => {
     if (!body) {
       return res.status(400).json({success: false,error: 'You must provide a user data',})
     }
-    try
-    {
-    const Username_Exists = await User.findOne({Username : body.Username})
-    if (Username_Exists) {
-        return res.status(400).json({ success: false, error: 'Username already exists' })
-      }
-    }
-    catch(error){
-      return res.status(500).json({ success: false, error: error })
-    }
 
     const user = new User(body)
 
     if (!user) {
       return res.status(400).json({ success: false, error: err })
     }
-
-
 
     user
         .save()
