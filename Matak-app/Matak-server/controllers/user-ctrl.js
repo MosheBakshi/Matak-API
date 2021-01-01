@@ -100,7 +100,7 @@ updateUser = async (req, res, next) => {
             success: false, 
             error: `Body not found` })
     }
-    await User.findOneAndUpdate({_id: body._id},{$set:req.body}, (err, user) =>{
+    await User.findOneAndUpdate({_id: body._id},{$set: body}, (err, user) =>{
     
     if (err) {
         return res.status(400).json({ success: false, error: err })
@@ -111,7 +111,7 @@ updateUser = async (req, res, next) => {
             success: false, 
             error: `User not found` })
     }
-    user.$set(req.body)
+    user.$set(body)
         .save()
         .then(() => {
             return res.status(200).json({

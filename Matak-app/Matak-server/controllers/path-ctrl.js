@@ -45,7 +45,7 @@ updatePath = async (req, res, next) => {
             error: `Body not found` })
     }
 
-        await Path.findOneAndUpdate({_id: body._id},{$set:req.body}, (err, path) =>{
+        await Path.findOneAndUpdate({_id: body._id},{$set: body}, (err, path) =>{
         
         if (err) {
             return res.status(400).json({ success: false, error: err })
@@ -56,7 +56,7 @@ updatePath = async (req, res, next) => {
                 success: false, 
                 error: `Path not found` })
         }
-        path.$set(req.body)
+        path.$set( body)
             .save()
             .then(() => {
                 return res.status(200).json({
