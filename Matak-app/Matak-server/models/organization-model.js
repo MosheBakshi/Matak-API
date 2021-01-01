@@ -6,7 +6,7 @@ const Schema = mongoose.Schema
 
 const Organization = new Schema(
 {
-        Name: { type: String, required: true },
+        Name: { type: String, required: true , unique: true},
         Contact: { type: String, required: true },
         Mobile: { type: String, required: true },
         Email: { type: String, required: true },

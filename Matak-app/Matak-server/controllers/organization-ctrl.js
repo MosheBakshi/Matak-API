@@ -94,23 +94,20 @@ updateOrgan = async (req, res, next) => {
 
 /* find organization by any data */
 getOrganBy = async(req, res, next) =>{
-    try
-    {
+
         const body = req.body
-        const organ = await Organization.find(body)
-        if (!organ) {
-            const error = new Error('Organization name not valid')
-            error.status = 404
-            throw error
+        await Organization.find(body, (err, organ) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
         }
         // next()
         return res.status(200).json({ success: true,length: organ.length, data: organ })
-    }
-    catch (e){
+    })
+    .catch (e)
         console.log(e)
         return res.status(e.status).json({ success: false, error: e.message })
     }
-  }
+  
 
 checkOrganName = async(req, res, next) =>{
     try
