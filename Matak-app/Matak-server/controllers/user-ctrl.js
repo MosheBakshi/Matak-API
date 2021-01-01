@@ -1,7 +1,7 @@
 const User = require('../models/user-model')
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
-const errorHandler = require('../utils/errors')
+
 
 getUserBy = async (req, res, next) => {
   //Verify
@@ -16,19 +16,17 @@ getUserBy = async (req, res, next) => {
     }
     });
     //
-  try
-  {
       const body = req.body
-      const users = await User.find(body)
-      if (!users.length) {
-          throw errorHandler('Users not found', 404)
-      }
+      await User.find(body, (err, users) => {
+        if (err) {
+          return res.status(400).json({ success: false, error: err })
+        }
       return res.status(200).json({ success: true, data: users })
-  }
-  catch(e){
+  })
+  .catch(e => {
       console.log(e)
       return res.status(e.statusCode).json({ success: false, error: e.message })
-  }
+  })
 }
 
 loginUser = async (req, res, next) => {

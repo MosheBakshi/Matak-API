@@ -10,17 +10,6 @@ createCar = async (req, res, next) => {
         })
     }
 
-    try
-    {
-    const Liecene_Number_Exists = await Car.findOne({Liecene_Number : body.Liecene_Number})
-    if (Liecene_Number_Exists) {
-        return res.status(400).json({ success: false, error: 'Liecene number already exists' })
-      }
-    }
-    catch(error){
-      return res.status(500).json({ success: false, error: error })
-    }
-
     const car = new Car(body)
 
     if (!car) {

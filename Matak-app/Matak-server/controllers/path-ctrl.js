@@ -1,7 +1,5 @@
 const Path = require('../models/path-model')
-const Status = require('../models/status-model')
-const StatusCtrl = require('../controllers/status-ctrl')
-const bcrypt = require("bcrypt")
+
 
 createPath = (req, res) => {
     const body = req.body
@@ -80,7 +78,6 @@ deletePath = async (req, res, next) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
-
         if (!path) {
             return res
                 .status(404)
@@ -100,9 +97,9 @@ getPathBy = async (req, res, next) => {
         }
         return res.status(200).json({ success: true,length: paths.length, data: paths })
     })
-    .catch(e)
+    .catch(e =>{
         console.log(e)
-        return res.status(e.status).json({ success: false, error: e.message })
+        return res.status(e.status).json({ success: false, error: e.message })})
 }
 
 

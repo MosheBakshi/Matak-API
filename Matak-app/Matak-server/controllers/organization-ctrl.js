@@ -45,7 +45,6 @@ deleteOrgan = async (req, res, next) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
-
         if (!organ) {
             return res
                 .status(404)

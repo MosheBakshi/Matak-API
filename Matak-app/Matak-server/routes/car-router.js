@@ -9,9 +9,11 @@ const router = express.Router()
 const protectedRouter = withJWTAuthMiddleware(router, "Cvbs!#56drsg575jrfsd@23456ewdg1");
 
 
+/* CRUD */
 router.post('/car',OrganCtrl.checkOrganName, CarCtrl.createCar)
+router.get('/car', CarCtrl.getCarBy)
 router.put('/car', CarCtrl.updateCar)
 router.delete('/car', CarCtrl.deleteCar)
-router.get('/car', CarCtrl.getCarBy)
+
 
 module.exports = router

@@ -93,21 +93,17 @@ deleteNotification  = async (req, res, next) => {
   }
 
 getNotificationBy = async (req, res, next) => {
-    try
-    {
+
         const body = req.body
-        const notification = await Notification.findById(body._id)
-        if(!notification){
-            const error = new Error ('Notification not found')
-            error.status =404
-            throw error
-        }
+        await Notification.findById(body._id, (err, notification) => {
+            if (err) {
+                return res.status(400).json({ success: false, error: err })
+            }
         return res.status(200).json({success :true , data : notification})
-    }
-    catch(e){
+    })
+    .catch(e => {
         console.log(e)
-        return res.status(e.status).json({success : false , error : e.message})
-    }
+        return res.status(e.status).json({success : false , error : e.message})})
 }
 
 // inbox 

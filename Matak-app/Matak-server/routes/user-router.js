@@ -6,12 +6,13 @@ const OrganCtrl = require('../controllers/organization-ctrl')
 const router = express.Router()
 
 const protectedRouter = withJWTAuthMiddleware(router, "Cvbs!#56drsg575jrfsd@23456ewdg1");
-
-protectedRouter.get('/users', UserCtrl.getUserBy)
+/* CRUD */
 router.post('/users', OrganCtrl.checkOrganName, UserCtrl.createUser)
-router.post('/users/login',UserCtrl.loginUser)
+protectedRouter.get('/users', UserCtrl.getUserBy)
 router.put('/users', UserCtrl.updateUser)
 router.delete('/users', UserCtrl.deleteUser)
 
+/* LOGIN */
+router.post('/users/login',UserCtrl.loginUser)
 
 module.exports = router

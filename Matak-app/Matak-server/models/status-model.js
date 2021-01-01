@@ -6,7 +6,7 @@ const Schema = mongoose.Schema
 
 const Status = new Schema(
 {
-        Status_Name: { type: String, required: true },
+        Status_Name: { type: String, required: true , unique: true },
         Color: { type: String, required: true },   
 },)
 

@@ -9,13 +9,13 @@ const { withJWTAuthMiddleware } = require("express-kun")
 
 const router = express.Router()
 const PathCtrl = require('../controllers/path-ctrl')
-const StatusCtrl = require('../controllers/status-ctrl')
 
 const protectedRouter = withJWTAuthMiddleware(router, "Cvbs!#56drsg575jrfsd@23456ewdg1")
+/* CRUD */
+router.post('/path', PathCtrl.createPath)
+router.get('/path', PathCtrl.getPathBy)
+router.put('/path', PathCtrl.updatePath)
+router.delete('/path', PathCtrl.deletePath)
 
-protectedRouter.post('/path', PathCtrl.createPath)
-protectedRouter.put('/path', PathCtrl.updatePath)
-protectedRouter.delete('/path', PathCtrl.deletePath)
-protectedRouter.post('/getpath', PathCtrl.getPathBy)
 
 module.exports = router

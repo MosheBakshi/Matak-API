@@ -7,7 +7,7 @@ const protectedRouter = withJWTAuthMiddleware(router, "Cvbs!#56drsg575jrfsd@2345
 
 protectedRouter.post('/status', StatusCtrl.postStatuses)//not useable
 protectedRouter.get('/status', StatusCtrl.getStatuses)
-protectedRouter.post('/statusByName', StatusCtrl.getStatusByName)
+// protectedRouter.post('/statusByName', StatusCtrl.getStatusByName)
 
 
 module.exports = router
