@@ -15,7 +15,7 @@ const User = new Schema(
         Last_Name: { type: String, required: true },            
         Mobile: { type: String, required: true },
         Email: { type: String, required: true },
-        Organization_Name: { type: String, required: false , default: "None"},//fix
+        Organization_Name: { type: String, required: true},
         Username: { type: String, required: true, unique: true },
         Password: {
           type: String,
