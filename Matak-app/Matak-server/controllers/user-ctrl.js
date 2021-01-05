@@ -4,18 +4,6 @@ const bcrypt = require("bcrypt")
 
 
 getUserBy = async (req, res, next) => {
-  //Verify
-  const token = req.headers['authorization'].split(' ')[1]
-  console.log(token)
-  jwt.verify(token, 'Cvbs!#56drsg575jrfsd@23456ewdg1', (err, decodedToken) => {
-    if(err) {
-      console.log(err)
-    }
-    else {
-     console.log(decodedToken.user._id)    
-    }
-    });
-    //
       const body = req.body
       await User.find(body, (err, users) => {
         if (err) {

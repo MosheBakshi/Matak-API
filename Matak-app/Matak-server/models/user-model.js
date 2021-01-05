@@ -22,7 +22,7 @@ const User = new Schema(
           required: true,
           set: setPassword
         },
-        User_type: { type: String, enum: ['Arbel','Matak','Admin'], required: true }
+        User_Type: { type: String, enum: ['Arbel','Matak','Admin'], required: true }
     },
     { timestamps: true },
 )

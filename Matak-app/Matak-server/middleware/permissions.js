@@ -1,52 +1,55 @@
-const errorHandler = require('../utils/errors');
+const jwt = require("jsonwebtoken")
 
 const isAdmin = (req, res, next) => {
-    try {
-        if (!(req.userType === process.env.USER_TYPE_ADMIN)) {
-
-            throw errorHandler('Permission not granted', 401);
+    const token = req.headers['authorization'].split(' ')[1]
+    jwt.verify(token, 'Cvbs!#56drsg575jrfsd@23456ewdg1', (err, decodedToken) => {
+        if(err) {
+            return res.status(401).json({ success: false, error: err })
         }
-
-        next();
-    }
-    catch (error) {
-        next(error);
-    }
-};
-
-const isChairpersonOrAdmin = (req, res, next) => {
-    try {
-        if (!(req.userType === process.env.USER_TYPE_ADMIN
-            || req.userType === process.env.USER_TYPE_CHAIRPERSON)) {
-            
-            throw errorHandler('Permission not granted', 401);
+        else {
+            const usertype = decodedToken.user.User_Type  
+            if (usertype != 'Admin') {
+                return res.status(401).json({ success: false, error: 'User no admin' })
+            }
         }
+        next()
+    })
+}
 
-        next();
-    }
-    catch (error) {
-        next(error);
-    }
-};
-
-const isCommitteeOrChairpersonOrAdmin = (req, res, next) => {
-    try {
-        if (!(req.userType === process.env.USER_TYPE_ADMIN
-            || req.userType === process.env.USER_TYPE_CHAIRPERSON
-            || req.userType === process.env.USER_TYPE_COMMITTEE)) {
-            
-            throw errorHandler('Permission not granted', 401);
+const isMatak = (req, res, next) => {
+    const token = req.headers['authorization'].split(' ')[1]
+    jwt.verify(token, 'Cvbs!#56drsg575jrfsd@23456ewdg1', (err, decodedToken) => {
+        if(err) {
+            return res.status(401).json({ success: false, error: err })
         }
+        else {
+            const usertype = decodedToken.user.User_Type  
+            if (usertype != 'Matak') {
+                return res.status(401).json({ success: false, error: 'User no matak' })
+            }
+        }
+        next()
+    })
+}
 
-        next();
-    }
-    catch (error) {
-        next(error);
-    }
-};
+const isArbel = (req, res, next) => {
+    const token = req.headers['authorization'].split(' ')[1]
+    jwt.verify(token, 'Cvbs!#56drsg575jrfsd@23456ewdg1', (err, decodedToken) => {
+        if(err) {
+            return res.status(401).json({ success: false, error: err })
+        }
+        else {
+            const usertype = decodedToken.user.User_Type  
+            if (usertype != 'Arbel') {
+                return res.status(401).json({ success: false, error: 'User no arbel' })
+            }
+        }
+        next()
+    })
+}
 
 module.exports = {
     isAdmin,
-    isChairpersonOrAdmin,
-    isCommitteeOrChairpersonOrAdmin
+    isArbel,
+    isMatak
 };
