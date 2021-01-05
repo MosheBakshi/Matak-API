@@ -13,7 +13,7 @@ const PathCtrl = require('../controllers/path-ctrl')
 const protectedRouter = withJWTAuthMiddleware(router, "Cvbs!#56drsg575jrfsd@23456ewdg1")
 /* CRUD */
 router.post('/path', PathCtrl.createPath)
-router.get('/path', PathCtrl.getPathBy)
+router.post('/path/get', PathCtrl.getPathBy)
 router.put('/path', PathCtrl.updatePath)
 router.delete('/path', PathCtrl.deletePath)
 
