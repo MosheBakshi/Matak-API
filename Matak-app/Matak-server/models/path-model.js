@@ -19,7 +19,7 @@ const Path = new Schema(
       Reason_Text: { type: String, required: true},
       // Involved_Organ_Array: {type: [String], required: true, default: "None"},
       // Escort_Organ_Array: {type: [String], required: true, default: "None"},
-      // Vehicles_Id_Involved_Array: { type: [String], required: true, default: "On foot"},
+      Vehicles_Id_Involved_Array: { type: [String], required: false, default: "On foot"},
       Status_Name: {type: String, required: true, default: "Submitted"},
       Is_Permanent: { type: Boolean, required: true},
       Remarks: { type: String, required: true}
