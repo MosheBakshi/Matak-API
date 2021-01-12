@@ -16,8 +16,7 @@ createPath = (req, res) => {
     if (!path) {
         return res.status(400).json({ success: false, error: err })
     }
-    path.Path_From = path.Array_Of_Points[0]
-    path.Path_To = path.Array_Of_Points[path.Array_Of_Points.length-1]
+
     path
         .save()
         .then(() => {
