@@ -92,6 +92,6 @@ postStatuses= (req, res) => {
 module.exports = {
     getStatuses,
     postStatuses,
-    getStatusByName,
+    //getStatusByName,
     //checkStatusByName,
 }

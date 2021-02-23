@@ -8,7 +8,7 @@ const protectedRouter = withJWTAuthMiddleware(router, "Cvbs!#56drsg575jrfsd@2345
 
 /* CRUD */
 router.post('/notification', NotificationCtrl.createNotification)
-router.get('/notification', NotificationCtrl.getNotificationBy)
+router.post('/notification/get', NotificationCtrl.getNotificationBy)
 router.put('/notification', NotificationCtrl.updateNotification)
 router.delete('/notification', NotificationCtrl.deleteNotification)
 

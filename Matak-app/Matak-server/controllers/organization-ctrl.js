@@ -64,7 +64,7 @@ updateOrgan = async (req, res, next) => {
             error: `Body not found` })
     }
 
-        await Organization.findOneAndUpdate({_id: body._id},{$set:req.body}, (err, organ) =>{
+        await Organization.findOneAndUpdate({_id: body._id},{$set: body}, (err, organ) =>{
         
         if (err) {
             return res.status(400).json({ success: false, error: err })
@@ -75,7 +75,7 @@ updateOrgan = async (req, res, next) => {
                 success: false, 
                 error: `Organization not found` })
         }
-        organ.$set(req.body)
+        organ.$set( body)
             .save()
             .then(() => {
                 return res.status(200).json({

@@ -4,18 +4,6 @@ const bcrypt = require("bcrypt")
 
 
 getUserBy = async (req, res, next) => {
-  //Verify
-  const token = req.headers['authorization'].split(' ')[1]
-  console.log(token)
-  jwt.verify(token, 'Cvbs!#56drsg575jrfsd@23456ewdg1', (err, decodedToken) => {
-    if(err) {
-      console.log(err)
-    }
-    else {
-     console.log(decodedToken.user._id)    
-    }
-    });
-    //
       const body = req.body
       await User.find(body, (err, users) => {
         if (err) {
@@ -100,7 +88,7 @@ updateUser = async (req, res, next) => {
             success: false, 
             error: `Body not found` })
     }
-    await User.findOneAndUpdate({_id: body._id},{$set:req.body}, (err, user) =>{
+    await User.findOneAndUpdate({_id: body._id},{$set: body}, (err, user) =>{
     
     if (err) {
         return res.status(400).json({ success: false, error: err })
@@ -111,7 +99,7 @@ updateUser = async (req, res, next) => {
             success: false, 
             error: `User not found` })
     }
-    user.$set(req.body)
+    user.$set(body)
         .save()
         .then(() => {
             return res.status(200).json({
