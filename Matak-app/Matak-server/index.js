@@ -36,5 +36,5 @@ app.use('/api', notificationRouter)
 
 app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`))
 
-//"All ctrls are CRUD setted - all written by same format , unique keys added and check by tokens started"
+//File uploading first version"
 
