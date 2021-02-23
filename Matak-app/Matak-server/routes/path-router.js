@@ -1,8 +1,9 @@
 const express = require('express')
 const { withJWTAuthMiddleware } = require("express-kun")
+const router = express.Router()
 const protectedRouter = withJWTAuthMiddleware(router, "Cvbs!#56drsg575jrfsd@23456ewdg1")
-///////// Start of File uploading ////////////// 
 
+///////// Start of File uploading ////////////// 
 const multer  = require('multer') // define library
 const storage = multer.diskStorage({ // define storage format and destination
     destination: function(req, file, cb){
@@ -13,7 +14,7 @@ const storage = multer.diskStorage({ // define storage format and destination
     }
 })
 const fileFilter = (req, file, cb) =>{ // define file filtering
-    if (file.mimetype === 'image/jpeg'){
+    if (file.mimetype === 'image/jpeg'){ // doc,pdf,etc
         cb(null, true)
     }
     else{
@@ -24,7 +25,8 @@ const fileFilter = (req, file, cb) =>{ // define file filtering
 const upload = multer({  //define upload types
     storage: storage,
     limits: {
-        fileSize: 1024 * 1024 * 10
+        fileSize: 1024 * 1024 * 10, // 10MB each file alone
+        files: 5 // 5 files max
     },
     fileFilter: fileFilter 
  }).array('File', 5)
@@ -34,6 +36,7 @@ const upload = multer({  //define upload types
      upload(req, res, function (err) {
      if (err) {
          return res.status(400).json({
+             success: false,
              err,
              message: err.message,
          })
@@ -55,7 +58,6 @@ const upload = multer({  //define upload types
 // const authorization = require('../middleware/authorization');
 // const validation = require('../middleware/validation');
 
-const router = express.Router()
 const PathCtrl = require('../controllers/path-ctrl')
 
 
