@@ -23,6 +23,7 @@ const Path = new Schema(
       Status_Name: {type: String, required: true, default: "Submitted"},
       Is_Permanent: { type: Boolean, required: true},
       Remarks: { type: String, required: true}
+      // Files Id ARR default : []
   },
   { timestamps: true },
 )
