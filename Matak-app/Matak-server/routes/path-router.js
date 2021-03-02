@@ -29,10 +29,9 @@ const upload = multer({  //define upload types
         files: 5 // 5 files max
     },
     fileFilter: fileFilter 
- }).array('File', 5)
+ }).array('File')
 
  router.post('/file', function (req, res) {
- 
      upload(req, res, function (err) {
      if (err) {
          return res.status(400).json({
@@ -41,10 +40,11 @@ const upload = multer({  //define upload types
              message: err.message,
          })
        }
-       console.log(req.file)
-       console.log(req.body)
-       return res.status(201).json({
+    console.log(req.files)
+    console.log(req.body)
+    return res.status(201).json({
          success: true,
+         path: req.files,
          message: 'File uploaded',
      })
      })
