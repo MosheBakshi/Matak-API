@@ -2,6 +2,7 @@ const express = require('express')
 const { withJWTAuthMiddleware } = require("express-kun")
 const router = express.Router()
 const protectedRouter = withJWTAuthMiddleware(router, "Cvbs!#56drsg575jrfsd@23456ewdg1")
+const PathCtrl = require('../controllers/path-ctrl')
 
 ///////// Start of File uploading ////////////// 
 const multer  = require('multer') // define library
@@ -31,7 +32,7 @@ const upload = multer({  //define upload types
     fileFilter: fileFilter 
  }).array('File')
 
- router.post('/file', function (req, res) {
+ router.post('/path', function (req, res, next) {
      upload(req, res, function (err) {
      if (err) {
          return res.status(400).json({
@@ -40,15 +41,16 @@ const upload = multer({  //define upload types
              message: err.message,
          })
        }
-    console.log(req.files)
+    // console.log(req.files)
     console.log(req.body)
-    return res.status(201).json({
-         success: true,
-         path: req.files,
-         message: 'File uploaded',
+    next()
+    // return res.status(201).json({
+    //      success: true,
+    //      path: req.files,
+    //      message: 'File uploaded',
+    //  })
      })
-     })
-   })
+   }, PathCtrl.createPath)
 ///////// End of File uploading ////////////// 
 
 // /* for permission - TO DO */
@@ -58,11 +60,10 @@ const upload = multer({  //define upload types
 // const authorization = require('../middleware/authorization');
 // const validation = require('../middleware/validation');
 
-const PathCtrl = require('../controllers/path-ctrl')
+
 
 
  /* CRUD */
-router.post('/path', PathCtrl.createPath)
 router.post('/path/get', PathCtrl.getPathBy)
 router.put('/path', PathCtrl.updatePath)
 router.delete('/path', PathCtrl.deletePath)

@@ -1,5 +1,5 @@
 const Path = require('../models/path-model')
-
+const GeoJSON = require('geojson')
 
 createPath = (req, res) => {
     const body = req.body
@@ -11,10 +11,15 @@ createPath = (req, res) => {
         })
     }
 
-    const path = new Path(body)
-
+    var path = new Path(JSON.parse(body.data))
+    console.log(req.files)
+    
     if (!path) {
         return res.status(400).json({ success: false, error: err })
+    }
+
+    for (x in req.files) {
+        path.Files_Path_Array.push(req.files[x].path)
     }
 
     path
