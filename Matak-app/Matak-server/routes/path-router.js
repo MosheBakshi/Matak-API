@@ -41,14 +41,7 @@ const upload = multer({  //define upload types
              message: err.message,
          })
        }
-    // console.log(req.files)
-    console.log(req.body)
     next()
-    // return res.status(201).json({
-    //      success: true,
-    //      path: req.files,
-    //      message: 'File uploaded',
-    //  })
      })
    }, PathCtrl.createPath)
 ///////// End of File uploading ////////////// 
