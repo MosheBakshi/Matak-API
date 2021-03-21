@@ -36,5 +36,5 @@ app.use('/api', notificationRouter)
 
 app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`))
 
-//or and Aviel and Eyal - update for ctrls - need to confirm all ctrls are in same syntax and all the rest of the files.
+//File uploading first version "
 
