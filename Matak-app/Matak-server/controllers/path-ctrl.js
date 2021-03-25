@@ -1,7 +1,8 @@
 const Path = require('../models/path-model')
-const GeoJSON = require('geojson')
+const jwt = require("jsonwebtoken")
 
 createPath = (req, res) => {
+    const token = req.cookies.token || '';
     const body = req.body
 
     if (!body) {
@@ -10,9 +11,21 @@ createPath = (req, res) => {
             error: 'You must provide a path',
         })
     }
+    var path = JSON.parse(body.data)
 
-    var path = new Path(JSON.parse(body.data))
-    console.log(req.files)
+    jwt.verify(token, 'Cvbs!#56drsg575jrfsd@23456ewdg1', (err, decodedToken) => {
+        if(err) {
+            return res.status(401).json({ success: false, error: err })
+        }
+        else {
+            path.Applicant_User_Id = decodedToken.user._id
+        }
+    })
+    //var path = new Path(JSON.parse(body.data))
+    path.Status_Name = "Submitted"
+    path = new Path(path)
+
+    //console.log(req.files)
     
     if (!path) {
         return res.status(400).json({ success: false, error: err })

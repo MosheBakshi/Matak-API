@@ -1,19 +1,18 @@
 const express = require('express')
-const { withJWTAuthMiddleware } = require("express-kun");
-
+const router = express.Router()
 const CarCtrl = require('../controllers/car-ctrl')
 const OrganCtrl = require('../controllers/organization-ctrl')
 
+const Permissions = require('../middleware/permissions')
+const Validations = require('../middleware/validation')
 
-const router = express.Router()
-const protectedRouter = withJWTAuthMiddleware(router, "Cvbs!#56drsg575jrfsd@23456ewdg1");
 
 
 /* CRUD */
-protectedRouter.post('/car',OrganCtrl.checkOrganName, CarCtrl.createCar)
-protectedRouter.post('/car/get', CarCtrl.getCarBy)
-protectedRouter.put('/car', CarCtrl.updateCar)
-protectedRouter.delete('/car', CarCtrl.deleteCar)
+router.post('/car',Validations.verifyUser,OrganCtrl.checkOrganName, CarCtrl.createCar)
+router.post('/car/get',Validations.verifyUser, CarCtrl.getCarBy)
+router.put('/car',Validations.verifyUser, CarCtrl.updateCar)
+router.delete('/car',Validations.verifyUser, CarCtrl.deleteCar)
 
 
 module.exports = router

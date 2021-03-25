@@ -1,12 +1,12 @@
 const express = require('express')
-const { withJWTAuthMiddleware } = require("express-kun");
+const router = express.Router()
 const StatusCtrl = require('../controllers/status-ctrl')
 
-const router = express.Router()
-const protectedRouter = withJWTAuthMiddleware(router, "Cvbs!#56drsg575jrfsd@23456ewdg1");
+const Permissions = require('../middleware/permissions')
+const Validations = require('../middleware/validation')
 
-protectedRouter.post('/status', StatusCtrl.postStatuses)//not useable
-protectedRouter.post('/status/get', StatusCtrl.getStatuses)
+//router.post('/status', StatusCtrl.postStatuses)//not useable
+router.post('/status/get',Validations.verifyUser, StatusCtrl.getStatuses)
 // protectedRouter.post('/statusByName', StatusCtrl.getStatusByName)
 
 

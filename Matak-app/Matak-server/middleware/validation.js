@@ -1,13 +1,5 @@
 const jwt = require("jsonwebtoken")
 
-/**
- * First middleware of '/login'.
- *
- * Verifies username and password.
- * If true, inserts userhs credentials to req and calls next middleware.
- * else, sends 403 status (no access).
- */
-
  const verifyUser = async (req, res, next) => {
     //get authcookie from request
     const authcookie = req.cookies.token
@@ -19,7 +11,7 @@ const jwt = require("jsonwebtoken")
      } 
      else if(data.user){
       req.user = data.user
-       next()
+      next()
     }
  })
 }
