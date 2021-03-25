@@ -5,7 +5,7 @@ const protectedRouter = withJWTAuthMiddleware(router, "Cvbs!#56drsg575jrfsd@2345
 const PathCtrl = require('../controllers/path-ctrl')
 const FileCtrl = require('../controllers/file-ctrl')
 
-protectedRouter.post('/path', FileCtrl.uploadFile, PathCtrl.createPath)
+router.post('/path', FileCtrl.uploadFile, PathCtrl.createPath)
 //router.post('/path/addfiles', FileCtrl.checkNumberOfFiles, FileCtrl.uploadFile)
 // /* for permission - TO DO */
 // const permissions = require('../middleware/permission');
@@ -18,7 +18,7 @@ protectedRouter.post('/path', FileCtrl.uploadFile, PathCtrl.createPath)
 
 
  /* CRUD */
-protectedRouter.post('/path/get', PathCtrl.getPathBy)
+router.post('/path/get', PathCtrl.getPathBy)
 protectedRouter.put('/path', PathCtrl.updatePath)
 protectedRouter.delete('/path', PathCtrl.deletePath)
 
