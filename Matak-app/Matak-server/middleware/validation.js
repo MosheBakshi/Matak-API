@@ -1,4 +1,4 @@
-const errorHandler = require('../utils/errors');
+const jwt = require("jsonwebtoken")
 
 /**
  * First middleware of '/login'.
@@ -7,34 +7,23 @@ const errorHandler = require('../utils/errors');
  * If true, inserts userhs credentials to req and calls next middleware.
  * else, sends 403 status (no access).
  */
-const verifyUser = async (req, res, next) => {
-    try {
-        /* Get userName and password from req.body */
-        const userData = {
-            userID: req.body.userID,
-            password: req.body.password
-        };
 
-        /* Query for getting credentials from Database */
-        const queryUser = await queries.getUserById(userData.userID);
-        
-        if (!queryUser) {
-            throw errorHandler('Wrong login credentials', 403);
-        }
-
-        if (queryUser.password != userData.password) {
-            throw errorHandler('Wrong login credentials', 403);
-        }
-
-        req.userData = userData;
-        req.userData.type = queryUser.type
-        next();
+ const verifyUser = async (req, res, next) => {
+    //get authcookie from request
+    const authcookie = req.cookies.token
+    
+    //verify token which is in cookie value
+    jwt.verify(authcookie ,"Cvbs!#56drsg575jrfsd@23456ewdg1",(err,data)=>{
+     if(err){
+       res.sendStatus(403)
+     } 
+     else if(data.user){
+      req.user = data.user
+       next()
     }
-    catch (error) {
-        next(error);
-    }
-};
+ })
+}
 
 module.exports = {
     verifyUser: verifyUser
-};
+}

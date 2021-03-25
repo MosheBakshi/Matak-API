@@ -1,6 +1,6 @@
 const express = require('express')
 const cors = require('cors')
-
+const cookieParser = require('cookie-parser')
 
 // requirements for DB - routers
 const db = require('./db')
@@ -10,10 +10,12 @@ const organizationRouter = require('./routes/organization-router')
 const statusRouter = require('./routes/status-router')
 const carRouter = require('./routes/car-router')
 const notificationRouter = require('./routes/notification-router')
+
 //
 
 
 const app = express()
+app.use(cookieParser())
 const apiPort = 3000
 
 // uses
