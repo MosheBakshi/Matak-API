@@ -1,3 +1,7 @@
+const fs = require('fs');
+const { promisify } = require('util')
+
+const unlinkAsync = promisify(fs.unlink)
 const multer  = require('multer') // define library
 const storage = multer.diskStorage({ // define storage format and destination
     destination: function(req, file, cb){
@@ -45,7 +49,27 @@ checkNumberOfFiles = (req, res, next) => {
     })
 }
 
+deletFiles = async (req, res, next) => {
+    const body = req.body
+    if (!body) {
+        return res.status(400).json({
+            success: false, 
+            error: `Body not found` })
+    }
+    if (!body.fileToDelete) {
+        next()
+    }
+    await unlinkAsync(process.cwd() + "\\"+ body.fileToDelete), (err, car) =>{
+    next()
+    .catch(er => {
+        return res.status(404).json({
+            success: false, error: `File delete crash` })
+        })
+    }
+}
+
 module.exports = {
     uploadFile,
     checkNumberOfFiles,
+    deletFiles,
 }
