@@ -21,7 +21,12 @@ const apiPort = 3000
 // uses
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(cors({credentials: true,origin: "*"}))
+app.use(cors({
+    credentials: true,
+    origin: [
+        'http://localhost:3000',
+        'https://www.hitprojectscenter.com/matakapinew']}
+    ))
 //
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
