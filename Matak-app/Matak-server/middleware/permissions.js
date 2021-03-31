@@ -1,8 +1,10 @@
 const jwt = require("jsonwebtoken")
+const secrets = require('../middleware/config');
+
 
 const isAdmin = (req, res, next) => {
     const token = req.cookies.token || '';
-    jwt.verify(token, 'Cvbs!#56drsg575jrfsd@23456ewdg1', (err, decodedToken) => {
+    jwt.verify(token, secrets.jwtSecret, (err, decodedToken) => {
         if(err) {
             return res.status(401).json({ success: false, error: err })
         }
@@ -18,7 +20,7 @@ const isAdmin = (req, res, next) => {
 
 const isMatak = (req, res, next) => {
     const token = req.cookies.token || '';
-    jwt.verify(token, 'Cvbs!#56drsg575jrfsd@23456ewdg1', (err, decodedToken) => {
+    jwt.verify(token, secrets.jwtSecret, (err, decodedToken) => {
         if(err) {
             return res.status(401).json({ success: false, error: err })
         }
@@ -34,7 +36,7 @@ const isMatak = (req, res, next) => {
 
 const isArbel = (req, res, next) => {
     const token = req.cookies.token || '';
-    jwt.verify(token, 'Cvbs!#56drsg575jrfsd@23456ewdg1', (err, decodedToken) => {
+    jwt.verify(token, secrets.jwtSecret, (err, decodedToken) => {
         if(err) {
             return res.status(401).json({ success: false, error: err })
         }

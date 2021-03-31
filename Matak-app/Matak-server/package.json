@@ -17,6 +17,7 @@
     "express": "^4.17.1",
     "express-kun": "^1.0.24",
     "file-system": "^2.2.2",
+    "geojson": "^0.5.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.0",
     "multer": "^1.4.2",
