@@ -28,7 +28,7 @@ loginUser = async (req, res, next) => {
       const token = jwt.sign({ user }, "Cvbs!#56drsg575jrfsd@23456ewdg1", {
         expiresIn: "24h"
       });
-      res.cookie('token', token, { httpOnly: true });
+      res.cookie('token', token, { sameSite: 'none', secure: true, httpOnly: true });
       return res.status(200).json({success: true, username: user.Username, id: user._id});
     }
     else {
