@@ -1,6 +1,7 @@
 const User = require('../models/user-model')
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
+const secrets = require('../middleware/config');
 
 
 getUserBy = async (req, res, next) => {
@@ -25,7 +26,7 @@ loginUser = async (req, res, next) => {
       return res.status(404).json({success: false,error: 'Username or password not valid'})
     }
     if (bcrypt.compareSync(body.Password, user.Password)) {
-      const token = jwt.sign({ user }, "Cvbs!#56drsg575jrfsd@23456ewdg1", {
+      const token = jwt.sign({ user }, secrets.jwtSecret, {
         expiresIn: "24h"
       });
       res.cookie('token', token, { sameSite: 'none', secure: true, httpOnly: true });
