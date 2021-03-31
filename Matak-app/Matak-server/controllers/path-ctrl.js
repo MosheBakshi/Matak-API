@@ -1,5 +1,6 @@
 const Path = require('../models/path-model')
 const jwt = require("jsonwebtoken")
+const secrets = require('../middleware/config');
 
 createPath = (req, res) => {
     const token = req.cookies.token || '';
@@ -13,7 +14,7 @@ createPath = (req, res) => {
     }
     var path = JSON.parse(body.data)
 
-    jwt.verify(token, 'Cvbs!#56drsg575jrfsd@23456ewdg1', (err, decodedToken) => {
+    jwt.verify(token, secrets.jwtSecret, (err, decodedToken) => {
         if(err) {
             return res.status(401).json({ success: false, error: err })
         }
@@ -21,7 +22,6 @@ createPath = (req, res) => {
             path.Applicant_User_Id = decodedToken.user._id
         }
     })
-    //var path = new Path(JSON.parse(body.data))
     path.Status_Name = "Submitted"
     path = new Path(path)
 

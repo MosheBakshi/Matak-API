@@ -43,7 +43,6 @@ const upload = multer({  //define upload types
    }
 
 checkNumberOfFiles = (req, res, next) => {
-    //console.log(req.body)
     return res.status(200).json({
         success: true
     })
@@ -73,9 +72,6 @@ deletFiles = async (req, res, next) => {
         body.Files_Path_Array.splice(index1, 1)
         await unlinkAsync(process.cwd() + "\\"+ item)
         });
-
-
-    // await unlinkAsync(process.cwd() + "\\"+ body.fileToDelete)
     next()
 }
 module.exports = {
