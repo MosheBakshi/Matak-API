@@ -55,12 +55,18 @@ deletFiles = async (req, res, next) => {
             success: false, 
             error: `Body not found` })
     }
+    if (!body._id){
+        return res.status(400).json({ success: false, error: `Path not found` })
+    }
     if (!body.fileToDelete) {
-        next()
+        return next()
     }
     await Path.findById(body._id, (err, paths) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
+        }
+        if (!paths){
+            return res.status(400).json({ success: false, error: `Path not found` })
         }
         body.Files_Path_Array = paths.Files_Path_Array
     })
