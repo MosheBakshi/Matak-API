@@ -21,18 +21,16 @@ loginUser = async (req, res, next) => {
     const body = req.body
     await User.findOne({Username : body.Username}, (err,user) => {
     if (!user) {
-      console.log("here")
       return res.status(404).json({success: false,error: 'Username or password not valid'})
     }
     if (bcrypt.compareSync(body.Password, user.Password)) {
-      const token = jwt.sign({ user },secrets.jwtSecret , {
+      const token = jwt.sign({ user }, secrets.jwtSecret, {
         expiresIn: "24h"
       });
-      res.cookie('token', token, { httpOnly: true });
+      res.cookie('token', token, { sameSite: 'none', httpOnly: true });
       return res.status(200).json({success: true, username: user.Username, id: user._id});
     }
     else {
-      console.log("here2")
       return res.status(401).json({success: false,error: 'Username or Password not valid'})
     }
   }).catch(err => console.log(err))
