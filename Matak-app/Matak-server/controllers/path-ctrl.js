@@ -91,7 +91,7 @@ updatePath = async (req, res, next) => {
 
 deletePath = async (req, res, next) => {
     const body = req.body
-    await Path.findOneAndDelete({ _id: body._id }, (err, path) => {
+    await Path.findOneAndRemove({ _id: body._id }, (err, path) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
