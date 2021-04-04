@@ -20,6 +20,7 @@ createPath = (req, res) => {
         }
         else {
             path.Applicant_User_Id = decodedToken.user._id
+            path.Organization_Name = decodedToken.user.Organization_Name
         }
     })
     path.Status_Name = "Submitted"

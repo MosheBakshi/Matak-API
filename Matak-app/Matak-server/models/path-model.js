@@ -11,7 +11,7 @@ function setDate(value) {
 
 const Path = new Schema(
 {
-      Array_Of_Points: { type: GeoJSON, required: true }, // not done, need to be decided by the group how to parse the data
+      Array_Of_Points: { type: GeoJSON, required: true },
       Terms_Text: { type: String, required: true },
       // Approval_User_Id: { type: String, required: false , default: "None"},//od meat
       Path_Name: { type: String, required: true },
@@ -19,7 +19,7 @@ const Path = new Schema(
       Start_Date: { type: Date, required: true, set: setDate},
       End_Date: { type: Date, required: true, set: setDate},
       Reason_Text: { type: String, required: true},
-      Involved_Organ_Array: {type: [String], required: true, default: []},
+      Organization_Name: {type: String, required: false},//default dont need to send it
       Escort_Organ_Array: {type: [String], required: true, default: []},
       Vehicles_Id_Involved_Array: { type: [String], required: false, default: []},
       Status_Name: {type: String, required: false},//default dont need to send it
