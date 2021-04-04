@@ -78,7 +78,7 @@ updateNotification = async (req, res, next) => {
 
 deleteNotification  = async (req, res, next) => {
     const body = req.body
-    await Notification.findOneAndDelete({ _id: body._id }, (err, notification) => {
+    await Notification.findOneAndRemove({ _id: body._id }, (err, notification) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }

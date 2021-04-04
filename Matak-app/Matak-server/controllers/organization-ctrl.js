@@ -41,7 +41,7 @@ createOrganization = (req, res, next) => {
 
 deleteOrgan = async (req, res, next) => {
     const body = req.body
-    await Organization.findOneAndDelete({ _id: body._id }, (err, organ) => {
+    await Organization.findOneAndRemove({ _id: body._id }, (err, organ) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
