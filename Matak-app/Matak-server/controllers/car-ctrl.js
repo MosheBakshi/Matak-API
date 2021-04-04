@@ -36,7 +36,7 @@ createCar = async (req, res, next) => {
 
 deleteCar = async (req, res, next) => {
     const body = req.body
-    await Car.findOneAndDelete({ _id: body._id }, (err, car) => {
+    await Car.findOneAndRemove({ _id: body._id }, (err, car) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }

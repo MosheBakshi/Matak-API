@@ -69,7 +69,7 @@ createUser = async (req, res, next) => {
 //checked
 deleteUser = async (req, res, next) => {
   const body = req.body
-  await User.findOneAndDelete({ _id: body._id }, (err, user) => {
+  await User.findOneAndRemove({ _id: body._id }, (err, user) => {
       if (err) {
           return res.status(400).json({ success: false, error: err })
       }
