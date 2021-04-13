@@ -92,16 +92,20 @@ updatePath = async (req, res, next) => {
 
 deletePath = async (req, res, next) => {
     const body = req.body
-    await Path.findOneAndRemove({ _id: body._id }, (err, path) => {
+    const path = await Path.findOne({ _id: body._id }, (err) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
-        if (!path) {
-            return res
-                .status(404)
-                .json({ success: false, error: `Path not found` })
+    }).catch(err => console.log(err))
+    if (!path) {
+        return res
+            .status(404)
+            .json({ success: false, error: `Path not found` })
+    }
+    await Path.findOneAndDelete({ _id: body._id }, (err) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
         }
-
         return res.status(200).json({ success: true, data: path })
     }).catch(err => console.log(err))
 }
