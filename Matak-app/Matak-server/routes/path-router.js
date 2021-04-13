@@ -11,6 +11,7 @@ router.post('/path', Validations.verifyUser,FileCtrl.uploadFile, PathCtrl.create
 
  /* CRUD */
 router.post('/path/get',Validations.verifyUser, PathCtrl.getPathBy)
+router.post('/path/getper',Validations.verifyUser,Permissions.GetPathPermission, PathCtrl.getPathBy)
 router.put('/path',Validations.verifyUser, FileCtrl.deletFiles, PathCtrl.updatePath)
 router.delete('/path',Validations.verifyUser, PathCtrl.deletePath)
 

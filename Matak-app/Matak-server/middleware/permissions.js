@@ -50,8 +50,30 @@ const isArbel = (req, res, next) => {
     })
 }
 
+const GetPathPermission = (req, res, next) => {
+    const token = req.cookies.token || '';
+    jwt.verify(token, secrets.jwtSecret, (err, decodedToken) => {
+        if(err) {
+            return res.status(401).json({ success: false, error: err })
+        }
+        else {
+            const user = decodedToken.user
+            if (user.User_Type == 'Arbel') {
+                req.body = {"$or":
+                    [{"Applicant_User_Id": user._id},
+                    {"Is_Permanent": true},]
+                            }
+            }
+            else {
+                req.body = {}
+            }
+        }
+        next()
+    })
+}
 module.exports = {
     isAdmin,
     isArbel,
-    isMatak
+    isMatak,
+    GetPathPermission
 };
