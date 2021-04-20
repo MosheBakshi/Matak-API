@@ -75,14 +75,15 @@ const GetPathPermission = (req, res, next) => {
         }
         else {
             const user = decodedToken.user
+            var date = new Date(Date.now() - 24 * 60 * 60 * 1000 * 2)//2 Days
             if (user.User_Type == 'Arbel') {
                 req.body = {"$or":
                     [{"Applicant_User_Id": user._id},
-                    {"Is_Permanent": true},]
-                            }
+                    {"Is_Permanent": true},],
+                           "$and":[{"End_Date":{"$gte":date}}] }
             }
             else {
-                req.body = {}
+                req.body = {"End_Date":{"$gte":date}}
             }
         }
         next()

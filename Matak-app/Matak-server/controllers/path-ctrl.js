@@ -13,7 +13,16 @@ createPath = (req, res) => {
         })
     }
     var path = JSON.parse(body.data)
-
+    if (!path.hasOwnProperty("Start_Point"))
+        return res.status(400).json({
+            success: false,
+            error: 'You must provide a Start_Point',
+        })
+    if (!path.hasOwnProperty("End_Point"))
+    return res.status(400).json({
+        success: false,
+        error: 'You must provide a End_Point',
+    })
     jwt.verify(token, secrets.jwtSecret, (err, decodedToken) => {
         if(err) {
             return res.status(401).json({ success: false, error: err })
