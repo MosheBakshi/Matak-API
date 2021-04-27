@@ -12,7 +12,11 @@ const storage = multer.diskStorage({ // define storage format and destination
     }
 })
 const fileFilter = (req, file, cb) =>{ // define file filtering
-    if (file.mimetype === 'image/jpeg' || file.mimetype === 'application/pdf'){ // doc,pdf,etc
+    if (file.mimetype === 'image/jpeg'
+    || file.mimetype === 'image/heic' 
+    || file.mimetype === 'application/pdf'
+    || file.mimetype === 'image/png')
+    {
         cb(null, true)
     }
     else{
@@ -38,6 +42,7 @@ const upload = multer({  //define upload types
              message: err.message,
          })
        }
+    //console.log(req.files)
     next()
      })
    }

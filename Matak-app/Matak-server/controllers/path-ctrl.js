@@ -1,8 +1,9 @@
 const Path = require('../models/path-model')
 const jwt = require("jsonwebtoken")
 const secrets = require('../middleware/config');
+const NotificationCtrl = require('../controllers/notification-ctrl')
 
-createPath = (req, res) => {
+createPath =  (req, res, next) => {
     const token = req.cookies.token || '';
     const body = req.body
 
@@ -48,7 +49,14 @@ createPath = (req, res) => {
     path
         .save()
         .then(() => {
-
+            // req.body = {
+            //     Notification_Text: "New Path",
+            //     Path_Id : path._id,
+            //     Sender_Id: path.Applicant_User_Id,
+            //     Sender_Organization: path.Organization_Name,
+            //     Reciver_Organization: "Matak",
+            // }
+            // NotificationCtrl.createNotification(req,res,next)
             return res.status(201).json({
                 success: true,
                 id: path._id,
@@ -57,6 +65,7 @@ createPath = (req, res) => {
             })
         })
         .catch(error => {
+            console.log(error)
             return res.status(400).json({
                 error,
                 message: 'Path not created!',

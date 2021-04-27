@@ -21,13 +21,7 @@ createOrganization = (req, res, next) => {
         .then(() => {
             return res.status(201).json({
                 success: true,
-                id: organization._id,
-                name: organization.name,
-                contact: organization.contact,
-                mobile: organization.mobile,
-                email: organization.email,
-                fax: organization.fax,
-                country: organization.country,
+                organization : organization,
                 message: 'Organization created!',
             })
         })

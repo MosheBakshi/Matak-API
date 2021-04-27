@@ -7,10 +7,12 @@ const Schema = mongoose.Schema
 //names
 const Notification = new Schema(
 {
-        notification_text: { type: String, required: true },
-        receiver_id: { type: String, required: true },
-        sender_id: { type: String, required: true },
-        date: { type: Date, required: true, default: Date.now},
+        Notification_Text: { type: String, required: true },//New Path,Update Path
+        Path_Id : { type: String, required: true },
+        Sender_Id: { type: String, required: true },
+        Sender_Organization: { type: String, required: true },
+        Reciver_Organization: {type: String, required: true},
+        Read: {type : Boolean, require : false,default: false} // default false
       
   },
   { timestamps: true },

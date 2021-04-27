@@ -7,36 +7,21 @@ createNotification = (req, res, next) => {
     const body = req.body
 
     if (!body) {
-        return res.status(400).json({
-            success: false,
-            error: 'You must provide a notification',
-        })
-    }
+        throw Error('You must provide a notification')
+        }
 
     const notification = new Notification(body)
-
     if (!notification) {
-        return res.status(400).json({ success: false, error: err })
+        throw Error('Notification Creation Failed')
     }
 
     notification
         .save()
         .then(() => {
-            return res.status(201).json({
-                success: true,
-                id: notification._id,
-                text: notification.notification_text,
-                receiver_id: notification.receiver_id,
-                sender_id: notification.sender_id,
-                date: notification.date,
-                message: 'Notification created!',
-            })
+            return
         })
         .catch(error => {
-            return res.status(400).json({
-                error,
-                message: 'Notification not created!',
-            })
+            throw Error('Notification Creation Failed')
         })
 }
 

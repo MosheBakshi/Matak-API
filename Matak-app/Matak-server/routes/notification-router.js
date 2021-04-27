@@ -11,6 +11,21 @@ router.post('/notification/get',Validations.verifyUser, NotificationCtrl.getNoti
 router.put('/notification',Validations.verifyUser, NotificationCtrl.updateNotification)
 router.delete('/notification',Validations.verifyUser, NotificationCtrl.deleteNotification)
 
+/*get:
+// sort by creation time dec order
+admin : all
+matak : Reciver Organization = matak
+arbel : Reciver Organization = self organ
+*/
+
+/*count read = false should return Number
+admin : all
+matak : Reciver Organization = matak
+arbel : Reciver Organization = self organ
+*/
+
+/*Update Read:
+set read to true by notification id*/
 
 /* others */
 router.post('/inbox',Validations.verifyUser,NotificationCtrl.getNotificationBySenderName)
