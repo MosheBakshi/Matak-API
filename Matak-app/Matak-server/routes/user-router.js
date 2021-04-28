@@ -16,4 +16,6 @@ router.delete('/users',Validations.verifyUser, UserCtrl.deleteUser)
 /* LOGIN */
 router.post('/users/login',UserCtrl.loginUser)
 
+router.get('/users/currentuser',Validations.tokenDecode)
+
 module.exports = router

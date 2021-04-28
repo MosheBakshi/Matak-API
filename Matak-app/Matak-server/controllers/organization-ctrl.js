@@ -21,13 +21,7 @@ createOrganization = (req, res, next) => {
         .then(() => {
             return res.status(201).json({
                 success: true,
-                id: organization._id,
-                name: organization.name,
-                contact: organization.contact,
-                mobile: organization.mobile,
-                email: organization.email,
-                fax: organization.fax,
-                country: organization.country,
+                organization : organization,
                 message: 'Organization created!',
             })
         })
@@ -41,7 +35,7 @@ createOrganization = (req, res, next) => {
 
 deleteOrgan = async (req, res, next) => {
     const body = req.body
-    await Organization.findOneAndDelete({ _id: body._id }, (err, organ) => {
+    await Organization.findOneAndRemove({ _id: body._id }, (err, organ) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }

@@ -10,9 +10,10 @@ router.post('/path', Validations.verifyUser,FileCtrl.uploadFile, PathCtrl.create
 //router.post('/path/addfiles', FileCtrl.checkNumberOfFiles, FileCtrl.uploadFile)
 
  /* CRUD */
-router.post('/path/get',Validations.verifyUser, PathCtrl.getPathBy)
+// router.post('/path/get',Validations.verifyUser, PathCtrl.getPathBy) // DO NOT DELETE
+router.get('/path',Validations.verifyUser,Permissions.GetPathPermission, PathCtrl.getPathBy)
 router.put('/path',Validations.verifyUser, FileCtrl.deletFiles, PathCtrl.updatePath)
-router.delete('/path',Validations.verifyUser, PathCtrl.deletePath)
+router.delete('/path',Validations.verifyUser,Permissions.isMatakOrAdmin, PathCtrl.deletePath)
 
 
 module.exports = router

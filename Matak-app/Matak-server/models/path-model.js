@@ -11,17 +11,23 @@ function setDate(value) {
 
 const Path = new Schema(
 {
-      Array_Of_Points: { type: GeoJSON, required: true }, // not done, need to be decided by the group how to parse the data
-      Terms_Text: { type: String, required: true },
+      Array_Of_Points: { type: GeoJSON, required: true },
+      Terms_Text: { type: String, required: false },
       // Approval_User_Id: { type: String, required: false , default: "None"},//od meat
       Path_Name: { type: String, required: true },
       Applicant_User_Id: { type: String, required: false },//default dont need to send it
       Start_Date: { type: Date, required: true, set: setDate},
       End_Date: { type: Date, required: true, set: setDate},
+      Start_Point: { type: [Number], required: true },
+      End_Point: { type: [Number], required: true },
       Reason_Text: { type: String, required: true},
+      Organization_Name: {type: String, required: false},//default dont need to send it
       Involved_Organ_Array: {type: [String], required: true, default: []},
       Escort_Organ_Array: {type: [String], required: true, default: []},
-      Vehicles_Id_Involved_Array: { type: [String], required: false, default: []},
+      Driver_Name: { type: String, required: true},
+      Driver_Cellphone: { type: String, required: true},
+      Car_Liecene_Number: { type: String, required: true},
+      // Vehicles_Id_Involved_Array: { type: [String], required: false, default: []},
       Status_Name: {type: String, required: false},//default dont need to send it
       Is_Permanent: { type: Boolean, required: true},
       Remarks: { type: String, required: true},

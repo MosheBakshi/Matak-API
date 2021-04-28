@@ -11,7 +11,7 @@ const isAdmin = (req, res, next) => {
         else {
             const usertype = decodedToken.user.User_Type  
             if (usertype != 'Admin') {
-                return res.status(401).json({ success: false, error: 'User no admin' })
+                return res.status(401).json({ success: false, error: 'User not admin' })
             }
         }
         next()
@@ -27,12 +27,29 @@ const isMatak = (req, res, next) => {
         else {
             const usertype = decodedToken.user.User_Type  
             if (usertype != 'Matak') {
-                return res.status(401).json({ success: false, error: 'User no matak' })
+                return res.status(401).json({ success: false, error: 'User not matak' })
             }
         }
         next()
     })
 }
+
+const isMatakOrAdmin = (req, res, next) => {
+    const token = req.cookies.token || '';
+    jwt.verify(token, secrets.jwtSecret, (err, decodedToken) => {
+        if(err) {
+            return res.status(401).json({ success: false, error: err })
+        }
+        else {
+            const usertype = decodedToken.user.User_Type  
+            if (usertype == 'Arbel') {
+                return res.status(401).json({ success: false, error: 'User not matak or admin' })
+            }
+        }
+        next()
+    })
+}
+
 
 const isArbel = (req, res, next) => {
     const token = req.cookies.token || '';
@@ -43,15 +60,39 @@ const isArbel = (req, res, next) => {
         else {
             const usertype = decodedToken.user.User_Type  
             if (usertype != 'Arbel') {
-                return res.status(401).json({ success: false, error: 'User no arbel' })
+                return res.status(401).json({ success: false, error: 'User not arbel' })
             }
         }
         next()
     })
 }
 
+const GetPathPermission = (req, res, next) => {
+    const token = req.cookies.token || '';
+    jwt.verify(token, secrets.jwtSecret, (err, decodedToken) => {
+        if(err) {
+            return res.status(401).json({ success: false, error: err })
+        }
+        else {
+            const user = decodedToken.user
+            var date = new Date(Date.now() - 24 * 60 * 60 * 1000 * 2)//2 Days
+            if (user.User_Type == 'Arbel') {
+                req.body = {"$or":
+                    [{"Applicant_User_Id": user._id},
+                    {"Is_Permanent": true},],
+                           "$and":[{"End_Date":{"$gte":date}}] }
+            }
+            else {
+                req.body = {"End_Date":{"$gte":date}}
+            }
+        }
+        next()
+    })
+}
 module.exports = {
     isAdmin,
     isArbel,
-    isMatak
+    isMatak,
+    isMatakOrAdmin,
+    GetPathPermission
 };

@@ -1,8 +1,9 @@
 const Path = require('../models/path-model')
 const jwt = require("jsonwebtoken")
 const secrets = require('../middleware/config');
+const NotificationCtrl = require('../controllers/notification-ctrl')
 
-createPath = (req, res) => {
+createPath =  (req, res, next) => {
     const token = req.cookies.token || '';
     const body = req.body
 
@@ -13,13 +14,23 @@ createPath = (req, res) => {
         })
     }
     var path = JSON.parse(body.data)
-
+    if (!path.hasOwnProperty("Start_Point"))
+        return res.status(400).json({
+            success: false,
+            error: 'You must provide a Start_Point',
+        })
+    if (!path.hasOwnProperty("End_Point"))
+    return res.status(400).json({
+        success: false,
+        error: 'You must provide a End_Point',
+    })
     jwt.verify(token, secrets.jwtSecret, (err, decodedToken) => {
         if(err) {
             return res.status(401).json({ success: false, error: err })
         }
         else {
             path.Applicant_User_Id = decodedToken.user._id
+            path.Organization_Name = decodedToken.user.Organization_Name
         }
     })
     path.Status_Name = "Submitted"
@@ -38,7 +49,14 @@ createPath = (req, res) => {
     path
         .save()
         .then(() => {
-
+            // req.body = {
+            //     Notification_Text: "New Path",
+            //     Path_Id : path._id,
+            //     Sender_Id: path.Applicant_User_Id,
+            //     Sender_Organization: path.Organization_Name,
+            //     Reciver_Organization: "Matak",
+            // }
+            // NotificationCtrl.createNotification(req,res,next)
             return res.status(201).json({
                 success: true,
                 id: path._id,
@@ -47,6 +65,7 @@ createPath = (req, res) => {
             })
         })
         .catch(error => {
+            console.log(error)
             return res.status(400).json({
                 error,
                 message: 'Path not created!',
@@ -91,16 +110,20 @@ updatePath = async (req, res, next) => {
 
 deletePath = async (req, res, next) => {
     const body = req.body
-    await Path.findOneAndDelete({ _id: body._id }, (err, path) => {
+    const path = await Path.findOne({ _id: body._id }, (err) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
-        if (!path) {
-            return res
-                .status(404)
-                .json({ success: false, error: `Path not found` })
+    }).catch(err => console.log(err))
+    if (!path) {
+        return res
+            .status(404)
+            .json({ success: false, error: `Path not found` })
+    }
+    await Path.findOneAndDelete({ _id: body._id }, (err) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
         }
-
         return res.status(200).json({ success: true, data: path })
     }).catch(err => console.log(err))
 }
