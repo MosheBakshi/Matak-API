@@ -129,6 +129,7 @@ const GetUnreadLen = (req, res, next) => {
                      $query: { "Reciver_Organization": user.Organization_Name , "Read": false}
                  }
             }
+            
             else {
                 
                 req.body ={$query: {"Read":false}}
@@ -145,6 +146,7 @@ module.exports = {
     isMatak,
     isMatakOrAdmin,
     GetPathPermission,
-    GetNotificationPermission
+    GetNotificationPermission,
+    GetUnreadLen
 
 };
