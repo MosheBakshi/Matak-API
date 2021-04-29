@@ -89,10 +89,62 @@ const GetPathPermission = (req, res, next) => {
         next()
     })
 }
+
+const GetNotificationPermission = (req, res, next) => {
+    const token = req.cookies.token || '';
+    jwt.verify(token, secrets.jwtSecret, (err, decodedToken) => {
+        if(err) {
+            return res.status(401).json({ success: false, error: err })
+        }
+        else {
+            const user = decodedToken.user
+            if (user.User_Type == 'Arbel' || user.User_Type == 'Matak') {
+                req.body = {
+                     "$query": { "Reciver_Organization": user.Organization_Name }, "$orderby": {createdAt :-1 } 
+                 }
+            }
+            else {
+                
+                req.body ={$query: {}, $orderby : {createdAt :-1 }}
+            }
+
+        }
+        next()
+    })
+
+
+}
+
+
+const GetUnreadLen = (req, res, next) => {
+    const token = req.cookies.token || '';
+    jwt.verify(token, secrets.jwtSecret, (err, decodedToken) => {
+        if(err) {
+            return res.status(401).json({ success: false, error: err })
+        }
+        else {
+            const user = decodedToken.user
+            if (user.User_Type == 'Arbel' || user.User_Type == 'Matak') {
+                req.body = {
+                     $query: { "Reciver_Organization": user.Organization_Name , "Read": false}
+                 }
+            }
+            else {
+                
+                req.body ={$query: {"Read":false}}
+            }
+
+        }
+        next()
+    })
+
+}
 module.exports = {
     isAdmin,
     isArbel,
     isMatak,
     isMatakOrAdmin,
-    GetPathPermission
+    GetPathPermission,
+    GetNotificationPermission
+
 };

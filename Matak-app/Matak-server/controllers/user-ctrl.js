@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 const secrets = require('../middleware/config');
 
-
 getUserBy = async (req, res, next) => {
       const body = req.body
       await User.find(body, (err, users) => {
