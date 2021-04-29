@@ -80,7 +80,7 @@ deleteNotification  = async (req, res, next) => {
 getNotificationBy = async (req, res, next) => {
 
     const body = req.body
-    await Notification.findById(body, (err, notification) => {
+    await Notification.find(body, (err, notification) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
@@ -126,6 +126,19 @@ getNotificationBySenderName = async (req, res, next) => {
         console.log(e)
         return res.status(e.status).json({success : false , error : e.message})
     }
+}
+
+getNotificationLen = async (req, res, next) => {
+    const body = req.body
+    await Notification.find(body, (err, paths) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+        return body.notification.length
+    })
+    .catch(e =>{
+        console.log(e)
+        return res.status(e.status).json({ success: false, error: e.message })})
 }
 module.exports = {
     createNotification,
