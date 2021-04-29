@@ -12,7 +12,8 @@ router.post('/path', Validations.verifyUser,FileCtrl.uploadFile, PathCtrl.create
  /* CRUD */
 // router.post('/path/get',Validations.verifyUser, PathCtrl.getPathBy) // DO NOT DELETE
 router.get('/path',Validations.verifyUser,Permissions.GetPathPermission, PathCtrl.getPathBy)
-router.put('/path',Validations.verifyUser, FileCtrl.deletFiles, PathCtrl.updatePath)
+//router.put('/path',Validations.verifyUser, FileCtrl.deletFiles, PathCtrl.updatePath)//Delete Files
+router.put('/path',Validations.verifyUser, , PathCtrl.updatePath)
 router.delete('/path',Validations.verifyUser,Permissions.isMatakOrAdmin, PathCtrl.deletePath)
 
 
