@@ -13,7 +13,7 @@ const Path = new Schema(
 {
       Array_Of_Points: { type: GeoJSON, required: true },
       Terms_Text: { type: String, required: false },
-      // Approval_User_Id: { type: String, required: false , default: "None"},//od meat
+      Approval_User_Id: { type: String, required: false },//default dont need to send it
       Path_Name: { type: String, required: true },
       Applicant_User_Id: { type: String, required: false },//default dont need to send it
       Start_Date: { type: Date, required: true, set: setDate},

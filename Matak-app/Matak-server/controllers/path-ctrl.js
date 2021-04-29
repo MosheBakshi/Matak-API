@@ -34,6 +34,7 @@ createPath =  (req, res, next) => {
         }
     })
     path.Status_Name = "Submitted"
+    path.Approval_User_Id = ""
     path = new Path(path)
 
     //console.log(req.files)
@@ -74,38 +75,69 @@ createPath =  (req, res, next) => {
 }
 
 updatePath = async (req, res, next) => {
+    var user
+    const token = req.cookies.token || '';
     const body = req.body
     if (!body) {
         return res.status(400).json({
             success: false, 
             error: `Body not found` })
     }
-
-        await Path.findOneAndUpdate({_id: body._id},{$set: body}, (err, path) =>{
-        
-        if (err) {
-            return res.status(400).json({ success: false, error: err })
+    jwt.verify(token, secrets.jwtSecret, (err, decodedToken) => {
+        if(err) {
+            return res.status(401).json({ success: false, error: err })
         }
-        
-        if (!path) {
-            return res.status(404).json({
-                success: false, 
-                error: `Path not found` })
+        else {
+            user = decodedToken.user
         }
-        path.$set( body)
-            .save()
-            .then(() => {
-                return res.status(200).json({
-                    success: true,
-                    organ: path,
-                    message: 'Path updated!',
-                })
-            })
-            .catch(error => {
-                return res.status(404).json({
-                    success: false, error: `Path not updated` })
+    })
+    if (user.User_Type != 'Arbel')
+        body.Approval_User_Id = user._id
+        
+    await Path.findOneAndUpdate({_id: body._id},{$set: body}, (err, path) =>{
+    
+    if (err) {
+        return res.status(400).json({ success: false, error: err })
+    }
+    
+    if (!path) {
+        return res.status(404).json({
+            success: false, 
+            error: `Path not found` })
+    }
+    path.$set( body)
+        .save()
+        .then(() => {
+            if (user.User_Type == 'Arbel'){
+            req.body = {
+                Notification_Text: "Update Path",
+                Path_Id : path._id,
+                Sender_Id: path.Applicant_User_Id,
+                Sender_Organization: path.Organization_Name,
+                Reciver_Organization: "Matak",
+                }
+            }
+            else {
+                req.body = {
+                    Notification_Text: "Update Path",
+                    Path_Id : path._id,
+                    Sender_Id: user._id,
+                    Sender_Organization: "Matak",
+                    Reciver_Organization: path.Organization_Name,
+                    }
+                }
+            NotificationCtrl.createNotification(req,res,next)
+            return res.status(200).json({
+                success: true,
+                organ: path,
+                message: 'Path updated!',
             })
         })
+        .catch(error => {
+            return res.status(404).json({
+                success: false, error: `Path not updated` })
+        })
+    })
 }
 
 deletePath = async (req, res, next) => {
