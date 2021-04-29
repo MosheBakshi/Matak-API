@@ -49,14 +49,14 @@ createPath =  (req, res, next) => {
     path
         .save()
         .then(() => {
-            // req.body = {
-            //     Notification_Text: "New Path",
-            //     Path_Id : path._id,
-            //     Sender_Id: path.Applicant_User_Id,
-            //     Sender_Organization: path.Organization_Name,
-            //     Reciver_Organization: "Matak",
-            // }
-            // NotificationCtrl.createNotification(req,res,next)
+            req.body = {
+                Notification_Text: "New Path",
+                Path_Id : path._id,
+                Sender_Id: path.Applicant_User_Id,
+                Sender_Organization: path.Organization_Name,
+                Reciver_Organization: "Matak",
+            }
+            NotificationCtrl.createNotification(req,res,next)
             return res.status(201).json({
                 success: true,
                 id: path._id,
