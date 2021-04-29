@@ -100,12 +100,12 @@ const GetNotificationPermission = (req, res, next) => {
             const user = decodedToken.user
             if (user.User_Type == 'Arbel' || user.User_Type == 'Matak') {
                 req.body = {
-                     "$query": { "Reciver_Organization": user.Organization_Name }, "$orderby": {createdAt :-1 } 
+                     "$query": { "Reciver_Organization": user.Organization_Name }, "$orderby": {createdAt : -1 }
                  }
             }
             else {
                 
-                req.body ={$query: {}, $orderby : {createdAt :-1 }}
+                req.body = {$query: {}, $orderby : {"createdAt" :-1 }}
             }
 
         }

@@ -129,7 +129,7 @@ updatePath = async (req, res, next) => {
             NotificationCtrl.createNotification(req,res,next)
             return res.status(200).json({
                 success: true,
-                organ: path,
+                data: path,
                 message: 'Path updated!',
             })
         })
