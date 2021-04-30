@@ -6,9 +6,9 @@ const Permissions = require('../middleware/permissions')
 const Validations = require('../middleware/validation')
 
 /* CRUD */
+router.get('/notification',Validations.verifyUser, Permissions.GetNotificationPermission, NotificationCtrl.getNotificationBy)
 router.put('/notification/read',Validations.verifyUser, NotificationCtrl.updateRead)
 router.get('/notification/get/len',Validations.verifyUser, Permissions.GetUnreadLen, NotificationCtrl.getNotificationLen)
-router.get('/notification/get',Validations.verifyUser, Permissions.GetNotificationPermission, NotificationCtrl.getNotificationBy)
 router.post('/notification',Validations.verifyUser, NotificationCtrl.createNotification)
 router.post('/notification/get',Validations.verifyUser, NotificationCtrl.getNotificationBy)
 router.put('/notification',Validations.verifyUser, NotificationCtrl.updateNotification)
