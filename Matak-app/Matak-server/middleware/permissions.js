@@ -91,27 +91,8 @@ const GetPathPermission = (req, res, next) => {
 }
 
 const GetPathByIdPermission = (req, res, next) => {
-    const token = req.cookies.token || '';
-    jwt.verify(token, secrets.jwtSecret, (err, decodedToken) => {
-        if(err) {
-            return res.status(401).json({ success: false, error: err })
-        }
-        // else {
-        //     const user = decodedToken.user
-        //     var date = new Date(Date.now() - 24 * 60 * 60 * 1000 * 2)//2 Days
-        //     if (user.User_Type == 'Arbel') {
-        //         req.body = {"$or":
-        //             [{"Applicant_User_Id": user._id},
-        //             {"Is_Permanent": true},],
-        //                    "$and":[{"End_Date":{"$gte":date}}] }
-        //     }
-        //     else {
-        //         req.body = {"End_Date":{"$gte":date}}
-        //     }
-        // }
-        req.body = {"_id":req.body._id}
-        next()
-    })
+    req.body = {"_id":req.body._id}
+    next()
 }
 
 
@@ -128,18 +109,13 @@ const GetNotificationPermission = (req, res, next) => {
                      "$query": { "Reciver_Organization": user.Organization_Name }, "$orderby": {createdAt : -1 }
                  }
             }
-            else {
-                
+            else { 
                 req.body = {$query: {}, $orderby : {"createdAt" :-1 }}
             }
-
         }
         next()
     })
-
-
 }
-
 
 const GetUnreadLen = (req, res, next) => {
     const token = req.cookies.token || '';
@@ -150,16 +126,11 @@ const GetUnreadLen = (req, res, next) => {
         else {
             const user = decodedToken.user
             if (user.User_Type == 'Arbel' || user.User_Type == 'Matak') {
-                req.body = {
-                     $query: { "Reciver_Organization": user.Organization_Name , "Read": false}
-                 }
+                req.body = { "Reciver_Organization": user.Organization_Name , "Read": false}
             }
-            
-            else {
-                
-                req.body ={$query: {"Read":false}}
+            else {               
+                req.body = {"Read":false}
             }
-
         }
         next()
     })
