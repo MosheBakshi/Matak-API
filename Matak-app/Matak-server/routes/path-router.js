@@ -7,6 +7,7 @@ const Permissions = require('../middleware/permissions')
 const Validations = require('../middleware/validation')
 
 router.post('/path', Validations.verifyUser,FileCtrl.uploadFile, PathCtrl.createPath)
+router.post('/path/byid', Validations.verifyUser,Permissions.GetPathByIdPermission, PathCtrl.getPathBy)
 //router.post('/path/addfiles', FileCtrl.checkNumberOfFiles, FileCtrl.uploadFile)
 
  /* CRUD */

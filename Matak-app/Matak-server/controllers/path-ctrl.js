@@ -167,6 +167,7 @@ getPathBy = async (req, res, next) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
+        console.log(paths)
         return res.status(200).json({ success: true,length: paths.length, data: paths })
     })
     .catch(e =>{
