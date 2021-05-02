@@ -13,7 +13,7 @@ const Notification = new Schema(
         Sender_Organization: { type: String, required: true },
         Reciver_Organization: {type: String, required: true},
         Read: {type : Boolean, require : false,default: false} // default false
-      
+        
   },
   { timestamps: true },
 )
