@@ -12,8 +12,10 @@ const Notification = new Schema(
         Sender_Id: { type: String, required: true },
         Sender_Organization: { type: String, required: true },
         Reciver_Organization: {type: String, required: true},
-        Read: {type : Boolean, require : false,default: false} // default false
-        
+        Read: {type : Boolean, require : false,default: false}, // default false
+        Sender_Name :{ type: String, required: true },
+        Sender_Email:{ type: String, required: true },
+        Path_Name:{ type: String, required: true },
   },
   { timestamps: true },
 )

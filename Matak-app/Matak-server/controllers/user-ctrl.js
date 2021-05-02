@@ -68,19 +68,24 @@ createUser = async (req, res, next) => {
 //checked
 deleteUser = async (req, res, next) => {
   const body = req.body
-  await User.findOneAndRemove({ _id: body._id }, (err, user) => {
+  const user = await User.findOne({ _id: body._id }, (err) => {
       if (err) {
           return res.status(400).json({ success: false, error: err })
       }
-
-      if (!user) {
-          return res
-              .status(404)
-              .json({ success: false, error: `User not found` })
+  }).catch(err => console.log(err))
+  if (!user) {
+      return res
+          .status(404)
+          .json({ success: false, error: `User not found` })
+  }
+  await User.findOneAndDelete({ _id: body._id }, (err) => {
+      if (err) {
+          return res.status(400).json({ success: false, error: err })
       }
       return res.status(200).json({ success: true, data: user })
   }).catch(err => console.log(err))
 }
+
 
 updateUser = async (req, res, next) => {
     const body = req.body

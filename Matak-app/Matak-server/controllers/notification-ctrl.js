@@ -62,20 +62,26 @@ updateNotification = async (req, res, next) => {
         })
 }
 //shablona
-deleteNotification  = async (req, res, next) => {
+deleteNotification = async (req, res, next) => {
     const body = req.body
-    await Notification.findOneAndRemove({ _id: body._id }, (err, notification) => {
+    const notification = await Notification.findOne({ _id: body._id }, (err) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
-        if (!notification) {
-            return res
-                .status(404)
-                .json({ success: false, error: `Notification not found` })
+    }).catch(err => console.log(err))
+    if (!notification) {
+        return res
+            .status(404)
+            .json({ success: false, error: `Notification not found` })
+    }
+    await Notification.findOneAndDelete({ _id: body._id }, (err) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
         }
         return res.status(200).json({ success: true, data: notification })
     }).catch(err => console.log(err))
-  }
+}
+
 
 //return in reverse
 getNotificationBy = async (req, res, next) => {

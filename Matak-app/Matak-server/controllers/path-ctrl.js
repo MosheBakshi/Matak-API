@@ -6,7 +6,8 @@ const NotificationCtrl = require('../controllers/notification-ctrl')
 createPath =  (req, res, next) => {
     const token = req.cookies.token || '';
     const body = req.body
-
+    var senderName
+    var senderEmail
     if (!body) {
         return res.status(400).json({
             success: false,
@@ -31,6 +32,8 @@ createPath =  (req, res, next) => {
         else {
             path.Applicant_User_Id = decodedToken.user._id
             path.Organization_Name = decodedToken.user.Organization_Name
+            senderName = decodedToken.user.First_Name + ' ' + decodedToken.user.Last_Name
+            senderEmail = decodedToken.user.Email
         }
     })
     path.Status_Name = "Submitted"
@@ -56,6 +59,9 @@ createPath =  (req, res, next) => {
                 Sender_Id: path.Applicant_User_Id,
                 Sender_Organization: path.Organization_Name,
                 Reciver_Organization: "Matak",
+                Sender_Name : senderName,
+                Sender_Email: senderEmail,
+                Path_Name: path.Path_Name,
             }
             NotificationCtrl.createNotification(req,res,next)
             return res.status(201).json({
@@ -115,6 +121,9 @@ updatePath = async (req, res, next) => {
                 Sender_Id: path.Applicant_User_Id,
                 Sender_Organization: path.Organization_Name,
                 Reciver_Organization: "Matak",
+                Sender_Name : user.First_Name + ' ' + user.Last_Name,
+                Sender_Email: user.Email,
+                Path_Name: path.Path_Name,
                 }
             }
             else {
@@ -124,6 +133,9 @@ updatePath = async (req, res, next) => {
                     Sender_Id: user._id,
                     Sender_Organization: "Matak",
                     Reciver_Organization: path.Organization_Name,
+                    Sender_Name : user.First_Name + ' ' + user.Last_Name,
+                    Sender_Email: user.Email,
+                    Path_Name: path.Path_Name,
                     }
                 }
             NotificationCtrl.createNotification(req,res,next)
