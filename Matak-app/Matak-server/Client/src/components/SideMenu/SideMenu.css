@@ -1,0 +1,72 @@
+.nav-menu {
+  position: fixed;
+  z-index: 5001;
+  min-width: 27rem;
+  height: 100%;
+  overflow-y: scroll;
+  max-width: 37rem;
+}
+
+#close-button {
+  font-size: 3rem;
+  color: white;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+#close-button:hover {
+  transform: scale(1.1);
+}
+
+#close-button:active {
+  transform: scale(0.9);
+}
+
+#menu-div {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.align-center {
+  align-items: center;
+}
+.add-padding {
+  padding: 0 2rem;
+}
+/* Options */
+.list-item {
+  display: flex;
+  flex-direction: row;
+  font-size: 1.5rem;
+  color: white;
+
+  cursor: pointer;
+  transition: 100ms;
+  align-items: center;
+  padding: 1rem 2rem;
+  margin: 1rem 0;
+}
+
+.list-item:hover {
+  background-color: white;
+  color: rgb(59, 59, 59);
+  border-radius: 5px;
+  -webkit-box-shadow: 0px 0px 29px -10px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 29px -10px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 29px -10px rgba(0, 0, 0, 0.75);
+}
+
+.list-item svg {
+  margin-bottom: 5.5px;
+  margin-right: 10px;
+}
+
+@media screen and (max-width: 440px) {
+  .nav-menu {
+    width: 100%;
+  }
+}

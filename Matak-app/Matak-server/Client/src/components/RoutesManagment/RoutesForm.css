@@ -1,0 +1,19 @@
+.Mui-disabled {
+    color: black !important;
+}
+
+.makeStyles-root-24 .MuiTextField-root {
+    margin-top: 8px !important;
+}
+
+#ending-date-picker {
+    margin-top: 0 !important;
+}
+
+#ending-date-picker > div {
+    margin-top: 8px !important;
+}
+
+#starting-date-picker > div {
+    margin-top: 8px !important;
+}

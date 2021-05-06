@@ -1,0 +1,6 @@
+#table-container .MuiDataGrid-footer {
+    display: none !important;
+}
+.Mui-disabled {
+    color: black !important;
+}
