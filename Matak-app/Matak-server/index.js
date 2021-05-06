@@ -47,7 +47,7 @@ app.use('/api', notificationRouter)
 app.use(express.static('Client/build'));
 // Serve up the index.html
 const path = require('path');
-app.get('/', (req, res) => {
+app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'Client', 'build', 'index.html'));
 });
 
