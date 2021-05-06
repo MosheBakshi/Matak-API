@@ -1,0 +1,71 @@
+{
+  "Approval_User_Id": "None",
+  "Applicant_User_Id": "123456789",
+  "Vehicles_Id_Involved_Array": [
+    "On foot"
+  ],
+  "Status_Name": "Submitted",
+  "_id": "605e24ece6b661682cc3519b",
+  "Path_Name": "Try1",
+  "Array_Of_Points": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.45175170898438,
+              31.689028998577037
+            ],
+            [
+              34.43183898925782,
+              31.632337053668728
+            ],
+            [
+              34.521102905273445,
+              31.656303848751094
+            ],
+            [
+              34.543075561523445,
+              31.697208483947467
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "_id": "605e24ece6b661682cc3519b"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            34.466171264648445,
+            31.641106110017002
+          ],
+          [
+            34.45724487304688,
+            31.541675081845423
+          ],
+          [
+            34.55200195312501,
+            31.570345497636517
+          ]
+        ]
+      },
+      "properties": {
+        "_id": "605e24ece6b661682cc3519b"
+      }
+    }
+  ],
+  "Is_Permanent": false,
+  "Terms_Text": "???????",
+  "Reason_Text": "Infrastructure",
+  "Remarks": "hello world",
+  "createdAt": "2021-03-26T18:16:12.845Z",
+  "updatedAt": "2021-03-26T18:16:12.845Z",
+  "__v": 0
+}

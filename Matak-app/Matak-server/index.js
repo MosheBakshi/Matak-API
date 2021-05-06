@@ -14,9 +14,19 @@ const notificationRouter = require('./routes/notification-router')
 //
 
 
+
 const app = express()
 app.use(cookieParser())
 const apiPort = 3000
+
+// Serve up production assets
+app.use(express.static('Client/build'));
+// Serve up the index.html
+const path = require('path');
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'Client', 'build', 'index.html'));
+});
+
 
 // uses
 app.use(express.json())
