@@ -64,7 +64,7 @@ updateNotification = async (req, res, next) => {
 //shablona
 deleteNotification = async (req, res, next) => {
     const body = req.body
-    const notification = await Notification.findOne({ _id: body._id }, (err) => {
+    const notification = await Notification.find({ _id:{$in: body._id} }, (err) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
@@ -74,7 +74,7 @@ deleteNotification = async (req, res, next) => {
             .status(404)
             .json({ success: false, error: `Notification not found` })
     }
-    await Notification.findOneAndDelete({ _id: body._id }, (err) => {
+    await Notification.deleteMany({ _id:{$in: body._id} }, (err) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
