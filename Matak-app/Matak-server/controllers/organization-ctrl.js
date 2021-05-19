@@ -96,9 +96,9 @@ getOrganBy = async(req, res, next) =>{
         // next()
         return res.status(200).json({ success: true,length: organ.length, data: organ })
     })
-    .catch (e)
-        console.log(e)
-        return res.status(e.status).json({ success: false, error: e.message })
+    .catch (err)
+        console.log(err)
+        return res.status(err.status).json({ success: false, error: err.message })
     }
   
 
