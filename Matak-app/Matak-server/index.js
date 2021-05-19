@@ -53,5 +53,4 @@ app.get('*', (req, res) => {
 
 app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`))
 
-//Update - all notifications functions are working and ready
-
+//latest version with permissions update
