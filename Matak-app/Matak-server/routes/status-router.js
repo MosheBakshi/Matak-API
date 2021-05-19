@@ -6,7 +6,7 @@ const Permissions = require('../middleware/permissions')
 const Validations = require('../middleware/validation')
 
 //router.post('/status', StatusCtrl.postStatuses)//not useable
-router.post('/status/get',Validations.verifyUser, StatusCtrl.getStatuses)
+router.post('/status/get',Validations.verifyUser, Permissions.isAdmin, StatusCtrl.getStatuses)
 // protectedRouter.post('/statusByName', StatusCtrl.getStatusByName)
 
 

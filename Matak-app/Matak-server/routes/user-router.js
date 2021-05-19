@@ -10,8 +10,8 @@ const Validations = require('../middleware/validation')
 /* CRUD */
 router.post('/users', Validations.verifyUser, Permissions.isAdmin, OrganCtrl.checkOrganName, UserCtrl.createUser)
 router.post('/users/get',Validations.verifyUser, UserCtrl.getUserBy)
-router.put('/users',Validations.verifyUser, UserCtrl.updateUser)
-router.delete('/users',Validations.verifyUser, UserCtrl.deleteUser)
+router.put('/users',Validations.verifyUser, Permissions.isAdmin, UserCtrl.updateUser)
+router.delete('/users',Validations.verifyUser, Permissions.isAdmin, UserCtrl.deleteUser)
 
 /* LOGIN */
 router.post('/users/login',UserCtrl.loginUser)
