@@ -87,20 +87,23 @@ updateOrgan = async (req, res, next) => {
 
 /* find organization by any data */
 getOrganBy = async(req, res, next) =>{
-
+    try
+    {
         const body = req.body
         await Organization.find(body, (err, organ) => {
         if (err) {
-            return res.status(400).json({ success: false, error: err })
+            throw err
         }
         // next()
-        return res.status(200).json({ success: true,length: organ.length, data: organ })
-    })
-    .catch (err)
+        else {return res.status(200).json({ success: true,length: organ.length, data: organ })}
+        })
+    }
+    catch (err){
         console.log(err)
         return res.status(err.status).json({ success: false, error: err.message })
-    }
-  
+        }
+}
+
 
 checkOrganName = async(req, res, next) =>{
     try
