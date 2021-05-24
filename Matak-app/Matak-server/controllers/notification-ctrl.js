@@ -157,12 +157,38 @@ updateRead = async (req, res, next) => {
         })
 }
 
+
+updateUnRead = async (req, res, next) => {
+    const body = req.body
+    if (!body) {
+        return res.status(400).json({
+            success: false, 
+            error: `Body not found` })
+    }
+        await Notification.updateMany({_id: {$in: body._id}},{$set: {"Read":false}}, (err, notification) =>{
+
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+        
+        if (!notification) {
+            return res.status(404).json({
+                success: false, 
+                error: `notification not found` })
+        }
+        return res.status(200).json({
+            success: true,
+            data: notification,
+            message: 'notification updated!'
+        })
+        })
+}
 module.exports = {
     createNotification,
     getNotificationBy,
     updateNotification,
     deleteNotification,
-    updateRead
-
+    updateRead,
+    updateUnRead
 }
 

@@ -14,5 +14,6 @@ router.delete('/notification',Validations.verifyUser, NotificationCtrl.deleteNot
 router.get('/notification',Validations.verifyUser, Permissions.GetNotificationPermission, NotificationCtrl.getNotificationBy)
 router.put('/notification',Validations.verifyUser, NotificationCtrl.updateRead)
 router.get('/notification/read',Validations.verifyUser, Permissions.GetUnreadLen, NotificationCtrl.getNotificationBy)
+router.put('/notification/unread',Validations.verifyUser, NotificationCtrl.updateUnRead)
 
 module.exports = router
