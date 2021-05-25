@@ -97,40 +97,6 @@ getNotificationBy = async (req, res, next) => {
         return res.status(e.status).json({success : false , error : e.message})})
 }
 
-// updateRead = async (req, res, next) => {
-//     const body = req.body
-//     if (!body) {
-//         return res.status(400).json({
-//             success: false, 
-//             error: `Body not found` })
-//     }
-//         await Notification.findOneAndUpdate({_id: body._id},{$set: {"Read":true}}, (err, notification) =>{
-
-//         if (err) {
-//             return res.status(400).json({ success: false, error: err })
-//         }
-        
-//         if (!notification) {
-//             return res.status(404).json({
-//                 success: false, 
-//                 error: `notification not found` })
-//         }
-//         notification.$set( {"Read":true})
-//             .save()
-//             .then(() => {
-//                 return res.status(200).json({
-//                     success: true,
-//                     data: notification,
-//                     message: 'notification updated!'
-//                 })
-//             })
-//             .catch(error => {
-//                 return res.status(404).json({
-//                     success: false, error: `notification not updated` })
-//             })
-//         })
-// }
-
 updateRead = async (req, res, next) => {
     const body = req.body
     if (!body) {

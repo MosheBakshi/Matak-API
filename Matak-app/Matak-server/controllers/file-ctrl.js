@@ -42,7 +42,6 @@ const upload = multer({  //define upload types
              message: err.message,
          })
        }
-    //console.log(req.files)
     next()
      })
    }
@@ -89,8 +88,6 @@ deletFiles = async (req, res, next) => {
 const downloadFiles = (req, res) => {
     const fileName = req.body.fileName;
     const path = __dirname.substring(0,__dirname.search('controller'));
-    //console.log(path)
-  
     res.download(path + fileName, (err) => {
       if (err) {
         res.status(500).send({

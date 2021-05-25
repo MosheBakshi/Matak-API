@@ -12,14 +12,9 @@ const carRouter = require('./routes/car-router')
 const notificationRouter = require('./routes/notification-router')
 
 //
-
-
-
 const app = express()
 app.use(cookieParser())
 const apiPort = 3000
-
-
 
 // uses
 app.use(express.json())
@@ -41,8 +36,6 @@ app.use('/api', statusRouter)
 app.use('/api', carRouter)
 app.use('/api', notificationRouter)
 
-
-
 // Serve up production assets
 app.use(express.static('Client/build'));
 // Serve up the index.html
@@ -53,4 +46,4 @@ app.get('*', (req, res) => {
 
 app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`))
 
-//latest version with permissions update
+//final version after cleaning.

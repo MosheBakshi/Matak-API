@@ -28,7 +28,7 @@ loginUser = async (req, res, next) => {
         expiresIn: "24h"
       });
       res.cookie('token', token);
-      // , { sameSite: 'none', httpOnly: true }
+      // , { sameSite: 'none', httpOnly: true } - for development only
       return res.status(200).json({success: true, username: user.Username, id: user._id});
     }
     else {
